@@ -21,7 +21,7 @@ const METRICS = [
   { key: 'hd', label: '홈닥터 지원(100세대당 월)', fmt: v => f.n1(v) + '건' }, { key: 'ld', label: '고독사 기록 건수(2019~2026)', fmt: v => f.int(v) + '건', count: [1, 3], zero: '기록 없음(0건)' },
   { key: 'hc_overall', label: '해피콜 종합 만족도', fmt: v => f.n1(v) + '점', missing: '조사 값 없음' }, { key: 'hc_welfare', label: '해피콜 복지 만족도', fmt: v => f.n1(v) + '점', missing: '조사 값 없음' },
 ];
-let map, layer, markers = {}, st = { metric: 'type', branch: '', type: '', q: '' }, selected = null;
+let map, layer, markers = {}, pulses = {}, st = { metric: 'type', branch: '', type: '', q: '' }, selected = null;
 const HOME = [[36.3, 127.8], 7];
 
 const val = (c, key) => key.startsWith('need.') ? c.need[key.slice(5)] : c[key];
@@ -62,13 +62,18 @@ function tipHtml(c, sc) {                                     // 요약만: 이�
 
 function draw(fit) {
   const rows = S.complexes.filter(passes), sc = scale(st.metric, S.complexes);
-  layer.clearLayers(); markers = {};
+  layer.clearLayers(); markers = {}; pulses = {};
   rows.forEach(c => {
     const col = sc.color(c), z = sc.zeroish && sc.zeroish(c), r = (5.4 + Math.sqrt(c.hh) / 5.8) * (z ? 0.7 : 1);
     const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#9aa3af' : '#3d4654') : '#626d7d', weight: col ? 0.9 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? (z ? 0.6 : 0.95) : 0.65, base: col ? (z ? '#9aa3af' : '#3d4654') : '#626d7d' });
     mk.bindTooltip(tipHtml(c, sc), { direction: 'top', offset: [0, -r], className: 'mtip', opacity: 1 });
     mk.on('click', () => setComplex(c.id));
     mk.addTo(layer); markers[c.id] = mk;
+    if (col && !z) {                                           // 반짝임: 원 뒤에서 같은 색 고리가 퍼졌다 사라진다. 단지마다 박자를 달리한다
+      const dur = 2.6 + Math.random() * 1.8;
+      pulses[c.id] = L.marker([c.lat, c.lon], { pane: 'pulse', interactive: false, keyboard: false,
+        icon: L.divIcon({ className: 'pulse', iconSize: [2 * r, 2 * r], html: `<i style="background:${col};animation-duration:${dur.toFixed(2)}s;animation-delay:-${(Math.random() * dur).toFixed(2)}s"></i>` }) }).addTo(layer);
+    }
   });
   $('#mapCount').textContent = `${rows.length}곳 표시 / 전체 ${S.complexes.length}곳`;
   $('#legend').innerHTML = `<b>${esc(mlabel(sc.m))}</b><div class="lg">${sc.legend.map(([c, t, d]) => `<span><i style="background:${c || '#fff'};${c ? '' : 'border:1px dashed #7b8696'}"></i>${esc(t)}${d ? `<span class="d">${esc(d)}</span>` : ''}</span>`).join('')}</div>`;
@@ -83,6 +88,7 @@ function draw(fit) {
 }
 function highlight() {
   if (selected && markers[selected]) markers[selected].setStyle({ color: markers[selected].options.base, weight: 1.1 });
+  Object.entries(pulses).forEach(([id, p]) => p.getElement() && p.getElement().classList.toggle('sel', id === S.cid));
   selected = S.cid;
   if (selected && markers[selected]) { markers[selected].setStyle({ color: '#111', weight: 3.5 }); markers[selected].bringToFront(); }
   document.querySelectorAll('#clist button').forEach(b => b.classList.toggle('on', b.dataset.id === S.cid));
@@ -106,7 +112,7 @@ export function select(cid) {
   highlight(); card();
   const c = S.byId[cid]; if (c && map) map.flyTo([c.lat, c.lon], Math.max(map.getZoom(), 11), { duration: 0.6 });
 }
-export function leave() { if (map) { map.stop(); layer.clearLayers(); map.remove(); map = null; markers = {}; } }   // 이동 중에 탭을 떠나도 그리기 오류가 나지 않게 멈추고 비운다
+export function leave() { if (map) { map.stop(); layer.clearLayers(); map.remove(); map = null; markers = {}; pulses = {}; } }   // 이동 중에 탭을 떠나도 그리기 오류가 나지 않게 멈추고 비운다
 
 export async function render(view) {
   const branches = [...new Set(S.complexes.map(c => c.branch))].sort((a, b) => a.localeCompare(b, 'ko'));
@@ -124,6 +130,7 @@ export async function render(view) {
   </div>`;
   map = L.map('map', { zoomControl: true, preferCanvas: true }).setView(...HOME);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, opacity: 0.9, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> 기여자' }).addTo(map);
+  map.createPane('pulse').style.zIndex = 390;                  // 원(캔버스, 400) 바로 아래
   layer = L.layerGroup().addTo(map);
   const bind = (id, k, fit) => $(id).addEventListener('input', e => { st[k] = e.target.value.trim(); draw(fit); });
   bind('#fq', 'q'); bind('#fm', 'metric'); bind('#fb', 'branch', true); bind('#ft', 'type');
