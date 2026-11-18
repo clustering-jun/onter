@@ -524,11 +524,18 @@ html{font-size:calc(clamp(13.5px,.42vw + 9px,17.5px)*.9)}
 @keyframes pulse{0%{transform:scale(1);opacity:.65}80%{opacity:0}100%{transform:scale(2.4);opacity:0}}
 @keyframes pulse-sel{0%{transform:scale(1);opacity:.85}100%{transform:scale(3.4);opacity:0}}
 @media (prefers-reduced-motion:reduce){.pulse i{animation:none}}
-.leaflet-tooltip.mtip.msel{border:2px solid var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.28);white-space:normal;width:max-content;max-width:23rem}
+.leaflet-tooltip.mtip{background:rgba(255,255,255,.86);backdrop-filter:blur(3px)}
+.leaflet-tooltip.mtip.msel{border:2px solid var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.28);white-space:normal;width:max-content;max-width:23rem;cursor:pointer}
+.leaflet-tooltip-top.mtip::before{border-top-color:rgba(255,255,255,.86)}
 .leaflet-tooltip-top.msel::before{border-top-color:var(--ink)}
-.leaflet-tooltip-bottom.msel::before{border-bottom-color:var(--ink)}
-.leaflet-tooltip-left.msel::before{border-left-color:var(--ink)}
-.leaflet-tooltip-right.msel::before{border-right-color:var(--ink)}
+.legend{background:rgba(255,255,255,.82);backdrop-filter:blur(3px)}
+.chip.dom.N1{background:color-mix(in srgb,var(--n1) 78%,#fff)}
+.chip.dom.N2{background:color-mix(in srgb,var(--n2) 78%,#fff)}
+.chip.dom.N3{background:color-mix(in srgb,var(--n3) 78%,#fff)}
+.chip.dom.N4{background:color-mix(in srgb,var(--n4) 78%,#fff)}
+.chip.dom.N5{background:color-mix(in srgb,var(--n5) 78%,#fff)}
+.chip.dom.N6{background:color-mix(in srgb,var(--n6) 78%,#fff)}
+.acctrial{font:inherit;font-size:0.867rem;padding:6px 8px;border:1px dashed var(--accent);border-radius:8px;background:#fff;color:var(--accent)}
 .wfcard{cursor:default}
 .wfcard p{margin:8px 0 10px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .wfcard .pgmeta{flex-wrap:wrap;gap:4px 14px}

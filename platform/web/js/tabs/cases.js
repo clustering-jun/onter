@@ -97,7 +97,7 @@ export async function render(view, arg, alive) {
       $('#nfQ').addEventListener('input', e => { nflt.q = e.target.value.trim(); const pos = e.target.selectionStart; draw(); const el = $('#nfQ'); el.focus(); el.setSelectionRange(pos, pos); });
     }
   };
-  view.innerHTML = `<div class="page"><div class="page-head"><div><h2>사례·소식</h2><p>${esc(d.source)}의 사례 ${d.cases.length}건을 프로그램 단위 카드 ${d.cards.length}장과 걸림돌 ${d.obstacles.length}건으로 정리했습니다.</p></div></div>
+  view.innerHTML = `<div class="page"><div class="page-head"><div><h2>사례·소식</h2><p>주거복지사 활동 사례집의 복지 사례를 정리했습니다.</p></div></div>
     <div class="subtabs" id="csTabs"><button data-s="cards">사례 카드 ${d.cards.length}</button><button data-s="play">걸림돌·해결 ${d.obstacles.length}</button><button data-s="news">소식 ${d.news.length}</button></div>
     <div id="csBody" class="grid"></div>
     <div class="note">사례집은 잘된 사례를 모은 자료입니다. 다른 단지에서 같은 결과가 난다는 뜻이 아니며, 해결 방식은 참고로만 보세요.</div></div>`;
