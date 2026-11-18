@@ -1,17 +1,24 @@
 {
   "plan": {
-    "n": 314,
+    "n": 3816,
     "by_source": {
-      "llm": 199,
-      "template_fallback": 115
+      "llm": 2267,
+      "template_fallback": 1549
+    }
+  },
+  "explain": {
+    "n": 4369,
+    "by_source": {
+      "llm": 4249,
+      "template_fallback": 120
     }
   },
   "checklist": {
-    "n": 12,
+    "n": 7516,
     "by_source": {
-      "llm": 10,
-      "rule_fallback": 2
+      "llm": 6593,
+      "rule_fallback": 923
     }
   },
-  "cache_entries": 352
+  "cache_entries": 13238
 }
