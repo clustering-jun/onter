@@ -1,0 +1,4 @@
+﻿budget,load_hours,feasible,n_items,cost,hours,overlap_with_draft_plan,draft_plan_violates_expert_limits,greedy_ratio,greedy_feasible
+500000.0,80.0,1.0,6.0,386351.2933,64.3653,0.6787,0.5448,0.6799,0.5724
+1000000.0,80.0,1.0,6.0,690390.5111,70.3183,0.7287,0.5345,0.8852,0.9276
+3000000.0,80.0,1.0,6.0,814119.2678,71.8119,0.7339,0.5586,0.9137,0.9759

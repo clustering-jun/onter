@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>온터</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/map"><b>온터</b></a>
+  <nav class="tabs" id="tabs" aria-label="화면">
+    <a data-tab="map" href="#/map">지도</a>
+    <a data-tab="complex" href="#/complex">단지 현황</a>
+    <a data-tab="recommend" href="#/recommend">프로그램 추천</a>
+    <a data-tab="plan" href="#/plan">실행 계획</a>
+    <a data-tab="programs" href="#/programs">프로그램 사전</a>
+    <a data-tab="cases" href="#/cases">사례·소식</a>
+    <a data-tab="happycall" href="#/happycall">해피콜</a>
+    <a data-tab="analysis" href="#/analysis">분석</a>
+    <a data-tab="kg" href="#/kg">Knowledge Graph</a>
+    <a data-tab="about" href="#/about">안내</a>
+  </nav>
+  <div class="top-right">
+    <div class="picker" id="picker">
+      <button class="picker-btn" id="pickerBtn" aria-haspopup="listbox"><span class="dot"></span><span id="pickerName">단지를 선택하세요</span><span class="caret">▾</span></button>
+      <div class="picker-pop" id="pickerPop" hidden>
+        <input id="pickerInput" placeholder="단지 이름·주소 검색" autocomplete="off" aria-label="단지 검색">
+        <div id="pickerList" role="listbox"></div>
+      </div>
+    </div>
+    <span class="llm" id="llmDot" data-tip="로컬 LLM 상태를 확인하는 중">LLM</span>
+  </div>
+</header>
+<main id="view"></main>
+<div id="tip" role="tooltip" hidden></div>
+<div id="toast" role="status" hidden></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

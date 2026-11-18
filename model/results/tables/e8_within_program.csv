@@ -1,0 +1,9 @@
+﻿grade,score,n,rho_within_program,p
+need,nf,302,0.2335,0.0
+need,need_idx,290,0.2105,0.0003
+need,ev,302,-0.0521,0.3672
+feas,feas_x,302,0.2494,0.0
+feas,feas_rule,302,0.4636,0.0
+y,nf,302,0.1894,0.0009
+y,ev,302,0.0771,0.1813
+y,feas_x,302,0.0167,0.772

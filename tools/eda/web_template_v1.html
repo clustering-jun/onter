@@ -1,0 +1,337 @@
+<title>온터 단지 복지 분석</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+/* 레이아웃: 상단 고정 탭 + 한 열 읽기 흐름, 카드 2열 격자(넓은 카드는 2칸). 지도 탭은 지도 | 단지 프로필 2단 */
+:root {
+  --bg: #f4f6f9; --surface: #ffffff; --ink: #141821; --muted: #5a6272; --line: #dfe3ea;
+  --accent: #2a78d6; --accent-soft: #e6f0fc; --alert: #d93a39; --alert-soft: #fdeceb; --ok: #138a5f;
+  --land: #e7e9ee; --landline: #c7ccd6;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --f-display: "Noto Serif KR", "Apple SD Gothic Neo", "Malgun Gothic", serif;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1117; --surface: #161b24; --ink: #e9edf3; --muted: #9ba4b4; --line: #2a313d;
+  --accent: #5f9ee9; --accent-soft: #1b2a40; --alert: #f06a68; --alert-soft: #3a1d1f; --ok: #3fc08f;
+  --land: #222936; --landline: #39414f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e1117; --surface: #161b24; --ink: #e9edf3; --muted: #9ba4b4; --line: #2a313d;
+  --accent: #5f9ee9; --accent-soft: #1b2a40; --alert: #f06a68; --alert-soft: #3a1d1f; --ok: #3fc08f;
+  --land: #222936; --landline: #39414f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+.brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-block: 14px 6px; }
+.brand h1 { font-family: var(--f-display); font-size: 1.35rem; margin: 0; letter-spacing: -0.01em; }
+.brand span { color: var(--muted); font-size: 0.85rem; }
+nav.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.tabs::-webkit-scrollbar { display: none; }
+nav.tabs button { font: inherit; font-size: 0.92rem; font-weight: 500; color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 12px 10px; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+nav.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
+main section { padding-block: 28px 64px; }
+.sec-head { max-width: 72ch; margin-bottom: 22px; }
+.sec-head h2 { font-family: var(--f-display); font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem); line-height: 1.3; margin: 0 0 10px; text-wrap: balance; }
+.sec-head p { color: var(--muted); margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 960px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px 20px 14px; min-width: 0; scroll-margin-top: 110px; }
+.card.wide { grid-column: 1 / -1; }
+.card .tag { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 4px; }
+.card h3 { font-size: 1.08rem; line-height: 1.45; margin: 0 0 8px; text-wrap: balance; }
+.card > p { color: var(--muted); margin: 0 0 12px; max-width: 80ch; font-size: 0.94rem; }
+.card .note { font-size: 0.78rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 8px; margin-top: 8px; }
+.figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.plot { width: 100%; min-height: 300px; }
+.card.flash { box-shadow: 0 0 0 3px var(--accent); transition: box-shadow .6s; }
+/* 한눈에 보기 */
+.stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin-bottom: 26px; }
+@media (max-width: 900px) { .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.stat { background: var(--surface); padding: 14px 16px; }
+.stat b { font-size: 1.65rem; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.stat b small { font-size: 0.85rem; font-weight: 500; margin-left: 2px; }
+.stat div { color: var(--muted); font-size: 0.82rem; }
+.probs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 22px; }
+@media (max-width: 1000px) { .probs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .probs { grid-template-columns: minmax(0, 1fr); } }
+.prob { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--alert); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.prob .k { font-size: 0.78rem; color: var(--alert); font-weight: 700; letter-spacing: 0.04em; }
+.prob h3 { margin: 0; font-size: 1.05rem; }
+.prob p { margin: 0; font-size: 0.92rem; }
+.prob p.q { color: var(--muted); }
+.prob button { margin-top: auto; align-self: flex-start; font: inherit; font-size: 0.85rem; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.callout { background: var(--accent-soft); border-radius: var(--r); padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+.callout b { color: var(--accent); white-space: nowrap; }
+.callout p { margin: 0; flex: 1 1 320px; }
+.callout button { font: inherit; font-weight: 600; background: var(--accent); color: #fff; border: 0; border-radius: 6px; padding: 8px 14px; cursor: pointer; }
+/* 체크 목록·예시 */
+.checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 640px) { .checks { grid-template-columns: minmax(0, 1fr); } }
+.checks h4 { margin: 0 0 8px; font-size: 1rem; }
+.checks h4.ok { color: var(--ok); } .checks h4.no { color: var(--alert); }
+.checks ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.checks li { display: flex; gap: 10px; align-items: flex-start; }
+.checks li small { display: block; color: var(--muted); font-size: 0.8rem; }
+.ck { font-weight: 700; width: 1.4em; text-align: center; flex: none; }
+.ck.ok { color: var(--ok); } .ck.no { color: var(--alert); }
+.exs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
+.ex { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; font-size: 0.9rem; }
+.ex ul { margin: 6px 0 0; padding-left: 1.1em; }
+.ex small { color: var(--muted); }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.prose { max-width: 80ch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 6px 22px 16px; }
+.prose h3 { font-size: 1.05rem; margin: 18px 0 6px; }
+.prose li { margin-bottom: 4px; }
+code { font-size: 0.85em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; word-break: break-all; }
+/* 탐색기 */
+.ex-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 14px; }
+.ex-controls label { display: grid; gap: 4px; font-size: 0.82rem; color: var(--muted); }
+.ex-controls select, .ex-controls input { font: inherit; font-size: 0.95rem; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px; min-width: 0; }
+.ex-controls input { width: min(260px, 70vw); }
+.ex-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 960px) { .ex-layout { grid-template-columns: minmax(0, 1fr); } }
+#map { width: 100%; height: 640px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+@media (max-width: 600px) { #map { height: 480px; } }
+.profile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px 20px; min-width: 0; }
+.profile h3 { font-family: var(--f-display); font-size: 1.4rem; margin: 0; }
+.profile .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.tile { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.tile .l { font-size: 0.78rem; color: var(--muted); }
+.tile .v { font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tile .bar { height: 5px; background: var(--line); border-radius: 3px; margin-top: 6px; position: relative; }
+.tile .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; }
+.tile .pr { font-size: 0.74rem; color: var(--muted); margin-top: 3px; }
+.profile h4 { font-size: 0.95rem; margin: 14px 0 6px; }
+.profile h4 small { font-weight: 400; color: var(--muted); }
+.plist { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.plist li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, 34%); gap: 10px; align-items: center; font-size: 0.88rem; }
+.plist li > span:last-child { display: flex; align-items: center; gap: 8px; }
+.plist .pb { display: block; flex: 1 1 auto; height: 8px; background: var(--line); border-radius: 4px; position: relative; }
+.plist .pb i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--accent); }
+.plist.gap .pb i { background: var(--alert); }
+.plist .pv { font-size: 0.75rem; color: var(--muted); white-space: nowrap; min-width: 4.6em; text-align: right; font-variant-numeric: tabular-nums; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { font: inherit; font-size: 0.82rem; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.chips button:hover, .chips button:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+.empty { color: var(--muted); font-size: 0.88rem; }
+footer { color: var(--muted); font-size: 0.8rem; padding-block: 24px 40px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><h1>온터 단지 복지 분석</h1><span>주택관리공단 공공임대 318개 단지 · 2026 DRIVE 온터팀</span></div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="분석 구역"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"></main>
+<footer class="wrap" id="foot"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.34.0/plotly.min.js"></script>
+<script>
+const D = /*__DATA__*/null;
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const CAT = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"];
+const rendered = new Map();   // div id -> fig key
+const shown = new Set();
+let MAPSEC = null, current = null;
+
+function tok(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function baseLayout() {
+  const ink = tok("--ink"), muted = tok("--muted"), line = tok("--line"), surf = tok("--surface");
+  const axis = { gridcolor: line, zerolinecolor: line, linecolor: line, tickfont: { color: muted }, title: { font: { color: muted, size: 12 } }, automargin: true };
+  return { paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", colorway: CAT,
+    font: { family: tok("--f-body"), color: ink, size: 12 }, margin: { l: 56, r: 16, t: 12, b: 50 },
+    hoverlabel: { bgcolor: surf, bordercolor: line, font: { color: ink, family: tok("--f-body"), size: 12 } },
+    legend: { font: { color: muted } }, xaxis: axis, yaxis: axis, _ink: ink, _muted: muted };
+}
+function merge(a, b) {
+  const o = Array.isArray(a) ? a.slice() : { ...a };
+  for (const k in b) {
+    if (b[k] && typeof b[k] === "object" && !Array.isArray(b[k]) && a && typeof a[k] === "object" && !Array.isArray(a[k])) o[k] = merge(a[k], b[k]);
+    else o[k] = b[k];
+  }
+  return o;
+}
+function themed(layout) {
+  const base = baseLayout();
+  const L = merge(base, layout || {});
+  for (const k of Object.keys(L)) if (/^[xy]axis\d*$/.test(k) && k !== "xaxis" && k !== "yaxis") L[k] = merge(base.xaxis, layout[k]);
+  if (L.shapes) L.shapes = L.shapes.map(s => s.line && !s.line.color && s.type === "line" ? merge(s, { line: { color: base._muted } }) : s);
+  if (L.annotations) L.annotations = L.annotations.map(a => { const o = merge({ font: { color: base._ink, size: 12 }, arrowcolor: base._muted }, a);
+    if (o.bg) { o.bgcolor = tok("--surface"); o.bordercolor = tok("--line"); o.borderpad = 4; } delete o.bg; return o; });
+  if (L.legend && L.legend.title) L.legend.title = merge({ font: { color: base._muted } }, L.legend.title);
+  delete L._ink; delete L._muted;
+  return L;
+}
+function themedData(data) {
+  const ink = tok("--ink");
+  return data.map(t => {
+    const c = { ...t };
+    if (c.textfont == null && (c.text || c.mode?.includes("text"))) c.textfont = { color: ink };
+    else if (c.textfont && !c.textfont.color) c.textfont = { ...c.textfont, color: ink };
+    if (c.type === "scatter" && c.mode?.includes("lines") && c.line?.color === "#222") c.line = { ...c.line, color: ink };
+    if (c.type === "heatmap") c.colorbar = merge({ tickfont: { color: tok("--muted") }, title: { font: { color: tok("--muted") } }, outlinewidth: 0 }, c.colorbar || {});
+    return c;
+  });
+}
+const PCFG = { responsive: true, displaylogo: false, displayModeBar: false };
+function draw(div, key) {
+  const f = D.figs[key];
+  Plotly.newPlot(div, themedData(f.data), themed(f.layout), PCFG);
+  rendered.set(div.id, key);
+}
+
+/* ── 구조 그리기 ── */
+const tabs = $("#tabs"), main = $("#main");
+for (const s of D.sections) {
+  const b = document.createElement("button");
+  b.textContent = s.label; b.role = "tab"; b.id = "tab-" + s.id; b.setAttribute("aria-controls", s.id);
+  b.addEventListener("click", () => show(s.id, true));
+  tabs.appendChild(b);
+  const el = document.createElement("section");
+  el.id = s.id; el.role = "tabpanel"; el.hidden = true; el.setAttribute("aria-labelledby", b.id);
+  el.innerHTML = `<div class="sec-head"><h2>${esc(s.title)}</h2>${s.lead ? `<p>${esc(s.lead)}</p>` : ""}</div>`;
+  if (s.id === "overview") el.appendChild(buildOverview(s));
+  else if (s.id === "explorer") el.appendChild(buildExplorer(s));
+  else if (s.html) { const d = document.createElement("div"); d.innerHTML = s.html; el.appendChild(d); }
+  if (s.cards && s.cards.length) {
+    const g = document.createElement("div"); g.className = "grid";
+    const tagOf = id => ({ "p-bg": "배경", "p-eld": "문제 1 · 근거", "p-hd": "문제 1 · 근거", "p-explain": "문제 1 · 근거", "p-size": "문제 2 · 기준", "p-branch": "문제 2 · 기준", "p-need": "문제 2 · 기준",
+      "p-unit": "문제 3 · 도달", "p-month": "문제 3 · 도달", "p-names": "문제 4 · 학습", "p-fields": "문제 4 · 학습", "p-sat": "문제 4 · 학습", "p-gap": "기회" }[id]);
+    for (const c of s.cards) {
+      const cd = document.createElement("article");
+      cd.className = "card" + (c.wide ? " wide" : ""); cd.id = c.id;
+      const tag = tagOf(c.id);
+      cd.innerHTML = (tag ? `<div class="tag">${tag}</div>` : "") + `<h3>${esc(c.title)}</h3><p>${esc(c.body)}</p>`;
+      if (c.figs.length) {
+        const fs = document.createElement("div"); fs.className = "figs";
+        for (const k of c.figs) {
+          const p = document.createElement("div"); p.className = "plot"; p.id = "plot-" + k; p.dataset.fig = k;
+          p.style.height = (c.height || (c.figs.length > 1 ? 360 : 400)) + "px";
+          p.setAttribute("role", "img"); p.setAttribute("aria-label", c.title);
+          fs.appendChild(p);
+        }
+        cd.appendChild(fs);
+      }
+      if (c.html) { const h = document.createElement("div"); h.innerHTML = c.html; cd.appendChild(h); }
+      if (c.note) { const n = document.createElement("div"); n.className = "note"; n.textContent = c.note; cd.appendChild(n); }
+      g.appendChild(cd);
+    }
+    el.appendChild(g);
+  }
+  main.appendChild(el);
+}
+$("#foot").textContent = `자료 기준 ${D.built} · 차트 위에 마우스를 올리면 값이, 범례를 누르면 계열 켜고 끄기가 됩니다. 모든 관계는 상관이며 원인을 뜻하지 않습니다.`;
+
+function buildOverview(s) {
+  const w = document.createElement("div");
+  w.innerHTML = `<div class="stats">${s.stats.map(t => `<div class="stat"><b>${esc(t.v)}<small>${esc(t.u)}</small></b><div>${esc(t.d)}</div></div>`).join("")}</div>
+  <div class="probs">${s.problems.map(p => `<div class="prob"><div class="k">문제 ${p.k}</div><h3>${esc(p.name)}</h3><p class="q">${esc(p.q)}</p><p>${esc(p.a)}</p><button type="button" data-go="${p.go}">근거 차트 보기 →</button></div>`).join("")}</div>
+  <div class="callout"><b>기회</b><p>${esc(s.opportunity)}</p><button type="button" data-tab="explorer">단지별로 보기</button></div>`;
+  w.addEventListener("click", e => {
+    const go = e.target.closest("[data-go]"), tb = e.target.closest("[data-tab]");
+    if (go) { show("problem", true); const c = document.getElementById(go.dataset.go); if (c) { c.scrollIntoView({ behavior: "smooth", block: "start" }); c.classList.add("flash"); setTimeout(() => c.classList.remove("flash"), 1400); } }
+    if (tb) show(tb.dataset.tab, true);
+  });
+  return w;
+}
+
+/* ── 탐색기 ── */
+function buildExplorer(s) {
+  MAPSEC = s;
+  const w = document.createElement("div");
+  w.innerHTML = `<div class="ex-controls">
+      <label for="metric">지도 색으로 볼 지표<select id="metric">${s.metrics.map(m => `<option value="${m.k}">${esc(m.label)}</option>`).join("")}</select></label>
+      <label for="find">단지 찾기<input id="find" list="cxlist" placeholder="단지 이름 입력 (예: 광주하남1)" autocomplete="off"></label>
+      <datalist id="cxlist">${D.cx.map(c => `<option value="${esc(c.n)}">`).join("")}</datalist>
+    </div>
+    <div class="ex-layout"><div id="map" role="img" aria-label="단지 위치 지도"></div><div class="profile" id="profile" aria-live="polite"></div></div>`;
+  w.querySelector("#metric").addEventListener("change", drawMap);
+  const f = w.querySelector("#find");
+  const go = () => { const c = D.cx.find(x => x.n === f.value.trim()); if (c) select(c.id); };
+  f.addEventListener("change", go); f.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+  w.querySelector("#profile").addEventListener("click", e => { const b = e.target.closest("[data-cx]"); if (b) select(b.dataset.cx); });
+  return w;
+}
+function fmtv(v, fmt, unit) {
+  if (v == null) return "자료 없음";
+  const d = /\.(\d)f/.exec(fmt); const n = d ? +d[1] : 0;
+  return Number(v).toLocaleString("ko-KR", { minimumFractionDigits: n, maximumFractionDigits: n }) + (unit === "%" ? "%" : " " + unit);
+}
+function drawMap() {
+  const div = $("#map"); const k = $("#metric").value; const m = MAPSEC.metrics.find(x => x.k === k);
+  const pts = D.cx.filter(c => c.lat != null);
+  const vals = pts.map(c => c.m[k]);
+  const ok = vals.filter(v => v != null).sort((a, b) => a - b);
+  const q = p => ok[Math.min(ok.length - 1, Math.floor(p * ok.length))];
+  const land = { type: "scatter", mode: "lines", x: MAPSEC.outline[0], y: MAPSEC.outline[1], fill: "toself", fillcolor: tok("--land"), line: { color: tok("--landline"), width: 0.8 }, hoverinfo: "skip", showlegend: false };
+  const miss = pts.filter(c => c.m[k] == null);
+  const has = pts.filter(c => c.m[k] != null);
+  const dot = { type: "scatter", mode: "markers", x: has.map(c => c.lon), y: has.map(c => c.lat), customdata: has.map(c => [c.id, c.n, c.br, c.sg, fmtv(c.m[k], m.fmt, m.unit)]),
+    marker: { color: has.map(c => c.m[k]), colorscale: [[0, "#cfe0f7"], [0.5, "#4a8fe0"], [1, "#123a73"]], cmin: q(0.03), cmax: q(0.97),
+      size: has.map(c => Math.max(6, Math.min(22, Math.sqrt(c.m["세대수"] || 100) / 2.4))), line: { color: tok("--surface"), width: 0.8 }, opacity: 0.92,
+      colorbar: { title: { text: m.label, side: "right", font: { color: tok("--muted"), size: 11 } }, thickness: 10, len: 0.6, outlinewidth: 0, tickfont: { color: tok("--muted") } } },
+    hovertemplate: "<b>%{customdata[1]}</b><br>%{customdata[2]} · %{customdata[3]}<br>" + esc(m.label) + ": %{customdata[4]}<extra></extra>", showlegend: false };
+  const gray = { type: "scatter", mode: "markers", x: miss.map(c => c.lon), y: miss.map(c => c.lat), customdata: miss.map(c => [c.id, c.n, c.br, c.sg]),
+    marker: { color: tok("--muted"), size: 6, symbol: "circle-open" }, hovertemplate: "<b>%{customdata[1]}</b><br>%{customdata[2]}<br>이 지표 자료 없음<extra></extra>", showlegend: false };
+  const cur = D.cx.find(c => c.id === current);
+  const ring = { type: "scatter", mode: "markers", x: cur ? [cur.lon] : [], y: cur ? [cur.lat] : [], marker: { size: 26, color: "rgba(0,0,0,0)", line: { color: tok("--alert"), width: 3 } }, hoverinfo: "skip", showlegend: false };
+  const layout = themed({ margin: { l: 4, r: 4, t: 4, b: 4 }, dragmode: "pan", hovermode: "closest",
+    xaxis: { visible: false, range: [124.4, 131.1], fixedrange: false }, yaxis: { visible: false, range: [33.0, 38.75], scaleanchor: "x", scaleratio: 1.24 } });
+  Plotly.react(div, [land, gray, dot, ring], layout, { ...PCFG, scrollZoom: true, displayModeBar: true, modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d", "toImage"] });
+  if (!div._bound) { div.on("plotly_click", ev => { const p = ev.points.find(p => p.customdata && p.customdata[0]); if (p) select(p.customdata[0]); }); div._bound = true; }
+}
+function select(id) {
+  current = id; const c = D.cx.find(x => x.id === id); if (!c) return;
+  $("#find").value = c.n;
+  const ms = MAPSEC.metrics;
+  const tiles = ms.map(m => { const v = c.m[m.k], pr = c.pr[m.k];
+    return `<div class="tile"><div class="l">${esc(m.label)}</div><div class="v">${esc(fmtv(v, m.fmt, m.unit))}</div>${pr != null ? `<div class="bar"><i style="width:${(pr * 100).toFixed(0)}%"></i></div><div class="pr">전체 단지 중 백분위 ${(pr * 100).toFixed(0)} (오른쪽일수록 큼)</div>` : ""}</div>`; }).join("");
+  const maxTop = Math.max(1, ...c.top.map(t => t[1]));
+  const top = c.top.length ? `<ul class="plist">${c.top.map(t => `<li><span>${esc(t[0])}</span><span><span class="pb"><i style="width:${(t[1] / maxTop * 100).toFixed(0)}%"></i></span><span class="pv">${t[1]}건</span></span></li>`).join("")}</ul>` : `<p class="empty">커뮤니티 활동 기록이 없습니다.</p>`;
+  const gap = c.gap.length ? `<ul class="plist gap">${c.gap.map(t => `<li><span>${esc(t[0])}</span><span><span class="pb"><i style="width:${(t[1] * 100).toFixed(0)}%"></i></span><span class="pv">이웃 ${(t[1] * 10).toFixed(0)}/10곳</span></span></li>`).join("")}</ul>` : `<p class="empty">${c.nb.length ? "비슷한 단지들이 흔히 하는 프로그램은 이 단지도 이미 하고 있습니다." : "기록이 15건 미만이거나 인구 자료가 없어 비교하지 않았습니다."}</p>`;
+  const nb = c.nb.length ? `<div class="chips">${c.nb.map(n => { const o = D.cx.find(x => x.n === n); return `<button type="button" data-cx="${o ? o.id : ""}">${esc(n)}</button>`; }).join("")}</div>` : "";
+  const e = c.e;
+  const extra = [e.pct20 != null ? `20세 미만 ${e.pct20.toFixed(0)}%` : null, e.eld != null ? `어르신 대상 프로그램 ${(e.eld * 100).toFixed(0)}%` : null,
+    e.n_res != null ? `주민 대상 기록 ${e.n_res}건(30개월)` : null, e.welfare != null ? `해피콜 복지 만족도 ${e.welfare.toFixed(1)}점(응답 ${e.n_total}명)` : null].filter(Boolean).join(" · ");
+  $("#profile").innerHTML = `<h3>${esc(c.n)}</h3><div class="meta">${esc(c.br)} · ${esc(c.st)}${extra ? "<br>" + esc(extra) : ""}</div>
+    <div class="tiles">${tiles}</div>
+    <h4>이 단지가 운영한 프로그램 <small>상위 ${c.top.length}개 / 전체 ${c.ntypes}종</small></h4>${top}
+    <h4>비슷한 단지들이 하는데 이 단지엔 없는 프로그램 <small>검토 후보, 정답 아님</small></h4>${gap}
+    ${nb ? `<h4>주민 구성이 비슷한 단지 10곳 <small>누르면 이동</small></h4>${nb}` : ""}`;
+  if (shown.has("explorer")) drawMap();
+}
+
+/* ── 탭 전환·지연 그리기 ── */
+function show(id, push) {
+  for (const s of D.sections) { document.getElementById(s.id).hidden = s.id !== id; document.getElementById("tab-" + s.id).setAttribute("aria-selected", String(s.id === id)); }
+  const sec = document.getElementById(id);
+  requestAnimationFrame(() => {
+    sec.querySelectorAll(".plot[data-fig]").forEach(p => { if (!rendered.has(p.id)) draw(p, p.dataset.fig); else Plotly.Plots.resize(p); });
+    if (id === "explorer") { shown.add("explorer"); if (!current) select("KOH_211"); drawMap(); }
+  });
+  if (push) { try { history.replaceState(null, "", "#" + id); } catch (e) {} window.scrollTo({ top: 0 }); }
+}
+function retheme() {
+  rendered.forEach((key, divId) => { const div = document.getElementById(divId); if (div) Plotly.react(div, themedData(D.figs[key].data), themed(D.figs[key].layout), PCFG); });
+  if (shown.has("explorer")) drawMap();
+}
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+const start = (location.hash || "").slice(1);
+show(D.sections.some(s => s.id === start) ? start : "overview");
+requestAnimationFrame(() => window.scrollTo(0, 0));
+</script>

@@ -1,0 +1,32 @@
+{
+  "case_id": "CB08",
+  "complexes_mentioned": ["산본가야2"],
+  "programs": [
+    {"name": "아름다운 동행", "summary": "집에서 혼자 긴 시간을 보내거나 바깥출입이 거의 없는 중장년 1인가구를 대상으로 요리·운동·만들기·교육 등으로 지역사회와 어울리는 공동체 활동", "operation": "월 2회 요리, 운동, 교육 등 프로그램 진행", "target": "바깥 출입이 거의 없는 중장년 1인가구", "start": "지난해 7월", "evidence": "운영 월 2회 요리, 운동, 교육 등 프로그램 진행"}
+  ],
+  "elements": [
+    {"type": "need", "text": "단지에 애주가가 많아 음주 후 다툼으로 경찰이 수시로 출동했다.", "value": null, "unit": null, "evidence": "애주가분들이 많으시거든요. 음주 후 다툼으로 경찰차도 수시로 출동했죠.", "speaker_role": "주거복지사"},
+    {"type": "need", "text": "고령층 대상 프로그램은 많지만 중장년 1인가구 대상 프로그램은 거의 없었다.", "value": null, "unit": null, "evidence": "65세 이상 고령층을 대상으로 하는 사회복지관 프로그램이나 맞춤 돌봄서비스는 많지만, 중장년 1인가구를 대상으로 한 프로그램은 거의 전무했다.", "speaker_role": "서술"},
+    {"type": "need", "text": "입주민 설문조사 결과 식사·반찬 지원, 의료 지원, 문화·여가생활 욕구가 높았다.", "value": null, "unit": null, "evidence": "입주민 설문조사를 통해 식사·반찬 지원, 의료 지원, 문화·여가생활에 대한 욕구가 높다는 것을 파악하고", "speaker_role": "서술"},
+    {"type": "need", "text": "혼자 있는 시간이 길고 마음 나눌 사람이 없는 것이 음주의 시작일 수 있다고 판단했다.", "value": null, "unit": null, "evidence": "'혼자 있는 시간이 너무 길고, 마음 나눌 사람이 없는 게 음주의 시작일 수 있겠구나' 하는 생각이 들더라고요.", "speaker_role": "주거복지사"},
+    {"type": "need", "text": "끼니를 스스로 챙기기 힘든 입주민이 많아 요리가 가장 인기다.", "value": null, "unit": null, "evidence": "끼니를 스스로 챙기기 힘든 분들이 많기 때문에 요리가 제일 인기랍니다.", "speaker_role": "주거복지사"},
+    {"type": "target", "text": "중장년(45~64세) 1인가구가 모여 함께 활동한다.", "value": null, "unit": null, "evidence": "중장년(45~64세) 1인가구가 모여 함께 활동하는 '아름다운 동행'을 시작하게 된 거예요.", "speaker_role": "주거복지사"},
+    {"type": "resource", "text": "주거복지상담실에 요리할 수 있는 공간이 조성되어 있다.", "value": null, "unit": null, "evidence": "정기적인 요리 프로그램이 있어서 이렇게 요리할 수 있는 공간이 함께 조성되어 있어요.", "speaker_role": "주거복지사"},
+    {"type": "partner", "text": "지역 관계 기관들과 함께 쓰레기가 쌓인 세대의 집안을 정리했다.", "partner_name": "지역 관계 기관", "role": "세대 집안 정리 협력", "value": null, "unit": null, "evidence": "해당 세대를 지역 관계 기관들과 함께 집안을 정리하고, '아름다운 동행' 프로그램 참여를 권유했어요.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "가장 수요가 높은 반찬 나눔으로 시작해 마음을 열었다.", "value": null, "unit": null, "evidence": "가장 수요가 높은 반찬 나눔으로 중장년 1인가구의 마음을 열며 아름다운 동행을 이어갔다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "하반기 내내 월 1~2회 반찬 나눔, 찐빵 만들기, 봉사활동, 금주·금연 교육 등을 진행했다.", "value": null, "unit": null, "evidence": "지난해 7월부터 하반기 내내 월 1~2회는 프로그램을 진행했거든요. 반찬 나눔, 쌀 찐빵 만들기, 지역사회 봉사활동, 금주·금연 교육 등등이요.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "음주 문제의 원인을 파악하기 위해 설문조사를 진행했다.", "value": null, "unit": null, "evidence": "단순히 '술을 줄여드려야겠다'는 생각보다 '왜 이런 상황이 반복될까'를 생각하며 설문조사를 진행했어요.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "자조모임과 프로그램을 몇 차례 진행했다.", "value": null, "unit": null, "evidence": "하지만 몇 차례 자조모임과 프로그램을 진행한 뒤에는", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "연말 크리스마스 케이크 만들기가 가장 호응이 좋았다.", "value": null, "unit": null, "evidence": "가장 호응이 좋았던 것은 연말에 했던 크리스마스 케이크 만들기 예요.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "인사도 안 하던 이웃끼리 친해져 행사 때 옆자리에 앉도록 손짓한다.", "value": null, "unit": null, "evidence": "같은 동에 살아도 인사도 안 하던 사이였는데, 이제는 행사 때 옆자리에 앉으라고 손짓하고", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "민원이 줄고 참여자 표정이 밝아졌다.", "value": null, "unit": null, "evidence": "민원이 줄었으니까요. 참여하신 분들 표정도 대체로 밝아지셨어요.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "쓰레기가 쌓였던 세대의 입주민이 지금은 적극 참여하며 몸과 마음이 건강해졌다고 말한다.", "value": null, "unit": null, "evidence": "처음엔 좀 꺼리시더니 지금은 아주 적극적으로 참여하세요.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "참여를 원하는 입주민이 점점 늘었다.", "value": null, "unit": null, "evidence": "\"나도 참여하고 싶다\", \"언제 또 하느냐\", \"다음엔 뭐 하느냐\" 관심을 보이는 분들이 점점 늘어나기 시작했죠.", "speaker_role": "주거복지사"},
+    {"type": "lesson", "text": "자립적 운영을 위해 리더를 양성하고 지역사회 관계 기관과 연계할 계획이다.", "value": null, "unit": null, "evidence": "'아름다운 동행'이 자립적으로 운영되도록 리더를 양성하고, 지역사회의 관계 기관과 연계해 볼 계획이다.", "speaker_role": "서술"}
+  ],
+  "obstacles": [
+    {"obstacle": "혼자가 익숙한 입주민들이 공동체 활동에 거리감을 느껴 참여 진입 장벽이 높았다.", "obstacle_category": "주민 참여·신뢰", "obstacle_evidence": "혼자가 익숙한 분들이라 공동체 활동에 거리감을 많이 느끼시거든요.", "solution": "반찬 나눔으로 마음의 거리감을 좁혀갔다.", "solution_strategy": "관계 형성·신뢰 쌓기", "solution_evidence": "그래서 반찬을 나눠드리면서 마음의 거리감을 좁혀갔어요.", "status": "해결"},
+    {"obstacle": "모집 공고 초기에 참여할 사람이 없고 입주민들이 싫어한다는 반응이 많았다.", "obstacle_category": "주민 참여·신뢰", "obstacle_evidence": "처음에 활동 참여자 모집 공고를 올렸을 때만 해도 \"참여할 사람이 없다\", \"여기 입주민들은 이런 거 싫어한다\" 등의 반응이 많았어요.", "solution": "자조모임과 프로그램을 몇 차례 진행하자 참여 희망자가 늘었다.", "solution_strategy": "단계적 확대·시범 운영", "solution_evidence": "하지만 몇 차례 자조모임과 프로그램을 진행한 뒤에는", "status": "해결"}
+  ],
+  "summary": "산본가야2단지 주거복지사가 음주 민원의 원인을 설문으로 살펴 중장년 1인가구의 고립을 파악하고, 반찬 나눔을 시작으로 요리·교육 등 월 1~2회 공동체 활동 '아름다운 동행'을 운영했다. 이웃 간 관계가 생기고 민원이 줄었으며, 리더 양성과 지역 기관 연계로 자립 운영을 계획하고 있다."
+}

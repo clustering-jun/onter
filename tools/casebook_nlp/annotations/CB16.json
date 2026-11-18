@@ -1,0 +1,33 @@
+{
+  "case_id": "CB16",
+  "complexes_mentioned": ["군산나운4"],
+  "programs": [
+    {"name": "행복나눔 공유곳간", "summary": "단지 상가 공실에 기부 식료품·생활용품을 모아 주민이 포인트로 가져가는 나눔 공간", "operation": "카드를 발급받은 주민이 하루 한 번 포인트로 물건 구입", "target": "카드를 발급받은 주민", "start": null,
+     "evidence": "이 곳간의 이름은 '행복나눔 공유곳간'이다. 십시일반으로 모인 작은 기부가 더 큰 나눔으로 확산되길 바라는 마음이 담겨 있는 이름이다."}
+  ],
+  "elements": [
+    {"type": "need", "text": "입주민의 83%가 기초생활수급자다.", "value": 83, "unit": "%", "evidence": "입주민의 83%가 기초생활수급자이고 60대 이상 고령층이 60%를 차지하는 군산나운4단지", "speaker_role": "주거복지사"},
+    {"type": "need", "text": "60대 이상 고령층이 입주민의 60%다.", "value": 60, "unit": "%", "evidence": "60대 이상 고령층이 60%를 차지하는 군산나운4단지", "speaker_role": "주거복지사"},
+    {"type": "need", "text": "코로나 시기 유선 상담만으로 사례관리를 하다 고독사가 뒤늦게 발견된 사례가 있었다.", "value": null, "unit": null, "evidence": "코로나 팬데믹 시기에는 유선 상담만으로 사례관리가 이루어져 실제로 고독사가 뒤늦게 발견된 안타까운 사례도 있었다.", "speaker_role": "주거복지사"},
+    {"type": "partner", "text": "LH 전북본부가 공실 상가 2개실을 무료로 임차해 주었다.", "value": 2, "unit": "개", "evidence": "공실이었던 아파트상가 2개실을 LH 전북본부에서 무료로 임차해 주고", "speaker_role": "주거복지사", "partner_name": "LH 전북본부", "role": "공실 상가 무료 임차"},
+    {"type": "partner", "text": "지역 냉동물류회사가 냉장고를 기탁했다.", "value": null, "unit": null, "evidence": "지역의 한 냉동물류회사에서 냉장고를 기탁하면서 곳간이 들어선 것이다.", "speaker_role": "주거복지사", "partner_name": "지역 냉동물류회사", "role": "냉장고 기탁"},
+    {"type": "partner", "text": "동 지역사회보장협의체 회의에서 나눔 장소 안건이 상정되어 단지 설치가 결정되었다.", "value": null, "unit": null, "evidence": "나운2동 지역사회보장협의체 회의에서 타 지역 사례처럼 나눔의 장소를 만들자는 안건이 상정되자", "speaker_role": "주거복지사", "partner_name": "나운2동 지역사회보장협의체", "role": "나눔 장소 안건 논의·설치 결정, 초기 특화사업 예산"},
+    {"type": "resource", "text": "초기에는 지역사회보장협의체 특화사업 예산으로 물건을 구입했다.", "value": null, "unit": null, "evidence": "초기에는 지역사회보장협의체의 특화사업 예산으로 물건을 구입하여 곳간을 채웠으나", "speaker_role": "주거복지사"},
+    {"type": "resource", "text": "이후 기업, 비영리단체, 개인 후원, 동호회 등 지역사회 기부로 곳간을 채웠다.", "value": null, "unit": null, "evidence": "이후 곳간을 채운 건 기업과 비영리단체, 그리고 개인 후원이나 동호회 같은 지역사회의 기부다.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "주거복지사가 협의체 운영위원으로서 단지에 설치를 건의했고, LH·행정복지센터·협의체와 협의해 빠르게 개소했다.", "value": null, "unit": null, "evidence": "이후 LH 전북본부, 행정복지센터, 지역사회보장협의체 등과 긴밀히 협의하여 빠르게 개소를 추진했다.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "물건에 금액 대신 점수를 매겨 운영한다.", "value": null, "unit": null, "evidence": "우리 곳간의 물건에는 금액 대신 점수가 매겨져 있다. 쌀(3kg) 5점, 라면(5개입) 3점, 냉동만두(300g×2봉) 3점, 세탁세제(3.2L) 5점, 주방세제(1.2L) 3점, 치약 2점 이런 식이다.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "카드를 발급받은 주민이 하루 한 번 와서 포인트로 물건을 구입한다.", "value": 1, "unit": "회", "evidence": "카드를 발급받은 주민들은 하루에 한 번 곳간에 와서 포인트로 물건을 구입한다.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "쌀·잡곡·장류·면류와 세제·치약·칫솔·휴지가 많이 소비된다.", "value": null, "unit": null, "evidence": "식료품 중에는 쌀·잡곡, 장류, 면류가 먼저 소비되고, 생활용품 중에는 세제류, 치약·칫솔, 휴지가 인기다.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "개소 당시 하루 100여 명이 이용했다.", "value": 100, "unit": "명", "evidence": "하루에 100여 명이 드나들었는데", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "현재 월평균 700~800명이 이용한다.", "value": null, "unit": "명", "evidence": "익숙해진 지금은 월평균 700~800명의 주민이 이용 중이다.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "주민이 자주 오가는 공간이 되어 안부 확인과 위기세대 발굴에 도움이 된다.", "value": null, "unit": null, "evidence": "공유곳간이 운영되면서 입주민들이 자주 오가는 공간을 중심으로 안부를 확인하고 위기세대를 발굴하는 데 큰 도움이 되고 있다.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "주민들이 어려운 이웃에게 곳간을 직접 홍보해 준다.", "value": null, "unit": null, "evidence": "주변에 어려운 주민이 있으면 공유곳간에 가보라며 주민들이 나서서 홍보해 준다.", "speaker_role": "주거복지사"},
+    {"type": "lesson", "text": "곳간을 지속 가능하게 채울 방법을 모색하고 있다.", "value": null, "unit": null, "evidence": "어떻게 하면 지속 가능하게 운영할 수 있을지 모색 중이다.", "speaker_role": "주거복지사"}
+  ],
+  "obstacles": [
+    {"obstacle": "2년 정도 이어지던 지역 기부·후원이 지역경제 악화로 줄었다.", "obstacle_category": "예산·재원", "obstacle_evidence": "2년 정도는 지역사회의 정기기부나 후원이 많았지만 지역경제가 악화되면서 기부물품이 줄었다.",
+     "solution": "시민예산과 지정기탁금을 투입해 운영하면서 지속 방안을 찾고 있다.", "solution_strategy": "대체 자원 연계", "solution_evidence": "시민예산과 지정기탁금을 투입해 운영하는 실정이라 어떻게 하면 지속 가능하게 운영할 수 있을지 모색 중이다.",
+     "status": "진행 중"}
+  ],
+  "summary": "수급자와 고령층 비율이 높은 단지에서 주거복지사가 지역사회보장협의체에 건의해 LH의 무상 상가와 기업 기탁 냉장고로 포인트제 나눔 곳간을 열었다. 월 700~800명이 이용하며 안부 확인·위기세대 발굴 거점이 되었지만 기부 감소로 지속 재원을 찾고 있다."
+}

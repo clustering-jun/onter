@@ -1,0 +1,17 @@
+{
+  "plan": {
+    "n": 314,
+    "by_source": {
+      "llm": 199,
+      "template_fallback": 115
+    }
+  },
+  "checklist": {
+    "n": 12,
+    "by_source": {
+      "llm": 10,
+      "rule_fallback": 2
+    }
+  },
+  "cache_entries": 352
+}

@@ -1,0 +1,10 @@
+kind,key,value,decision,decided_by,decided_at,note
+program_std,CB10_P1,O01,override,analyst,2026-11-17,자동 판정 M01(디지털 교육)은 오판. 지하상가 커뮤니티 공간을 만들어 노래교실·원예·그림책 등 여러 건강·문화 프로그램을 여는 종합형
+program_std,CB13_P1,B11,override,analyst,2026-11-17,주민 공동체가 나들이 동행·주거환경 개선 등 이웃을 돌보는 활동이라 B03(위기가구 발굴)보다 B11(주민 돌보미·이웃지킴이)
+deployment_complex,서울가양7,KOH_20,confirm,user,2026-11-17,통합표 주소 '가양7단지아파트'·가양 단지 하나뿐
+deployment_complex,인천삼산1,KOH_107,confirm,user,2026-11-17,삼산 단지 중 영구임대는 인천삼산(삼산4는 국민임대)·배치는 500세대 이상 영구임대
+deployment_complex,아산음내,KOH_182,confirm,user,2026-11-17,OCR 오타(읍→음) 추정·주소 읍내동
+deployment_complex,마산증리1,KOH_291,confirm,user,2026-11-17,OCR 오타(중→증) 추정·현장 실증 단지
+case_complex,CB01|청주산남2,KOH_137,confirm,user,2026-11-17,"산남주공2단지(2-1·2-2 합계 2,115세대 = 원문 '2,000세대가 넘는 대단지')"
+case_complex,CB01|청주산남2,KOH_138,confirm,user,2026-11-17,"산남주공2단지(2-1·2-2 합계 2,115세대 = 원문 '2,000세대가 넘는 대단지')"
+case_complex,CB02|서울가양7,KOH_20,confirm,user,2026-11-17,배치 단지 서울가양7 확정과 같은 단지

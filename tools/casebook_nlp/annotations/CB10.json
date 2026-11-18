@@ -1,0 +1,35 @@
+{
+  "case_id": "CB10",
+  "complexes_mentioned": ["진주가좌1"],
+  "programs": [
+    {"name": "건강한 아파트 만들기", "summary": "미임대 지하상가에 입주민 커뮤니티 공간을 조성하고 노래교실·원예·그림책 만들기·디지털 교육·만보 걷기 등 프로그램으로 입주민 건강 지원", "operation": "입주민 욕구를 파악하여 맞춤형 건강 프로그램 개설·운영", "target": "입주민 누구나", "start": "2022년 4월", "evidence": "아파트 미임대 지하상가에 입주민 커뮤니티 공간을 조성하고, 노래교실, 원예, 그림책 만들기, 디지털 교육, 만보 걷기 등의 프로그램을 운영해 입주민의 건강 지원"}
+  ],
+  "elements": [
+    {"type": "need", "text": "2019년 방화·흉기난동사건을 계기로 사업이 시작되었다.", "value": null, "unit": null, "evidence": "2019년 안인득 방화·흉기난동사건을 계기로 시작된 '건강한 아파트 만들기'는", "speaker_role": "서술"},
+    {"type": "need", "text": "설문 결과 동적인 프로그램에 대한 수요가 높았다.", "value": null, "unit": null, "evidence": "동적인 프로그램에 대한 수요가 높다는 설문 결과를 반영해 노래교실을 열었다.", "speaker_role": "서술"},
+    {"type": "need", "text": "지하상가에 엘리베이터가 없어 장애인 10여 명이 참여하지 못한다.", "value": 10, "unit": "명", "evidence": "지하상가에 엘리베이터가 없다 보니 참여하고 싶어도 못하는 장애인 10여 명이 전동휠체어에 의지한 채 건물 앞에 모여 있다.", "speaker_role": "서술"},
+    {"type": "resource", "text": "진주시와 LH경남본부 지원으로 미임대 지하상가를 커뮤니티 공간으로 조성했다.", "value": null, "unit": null, "evidence": "2022년 4월 진주시와 LH경남본부의 지원으로 미임대 지하상가를 입주민 커뮤니티 공간으로 조성하며 출발했다.", "speaker_role": "서술"},
+    {"type": "partner", "text": "진주시가 커뮤니티 공간 조성을 지원했다.", "partner_name": "진주시", "role": "공간 조성 지원", "value": null, "unit": null, "evidence": "진주시와 LH경남본부의 지원으로", "speaker_role": "서술"},
+    {"type": "partner", "text": "진주보건소가 음향시설을 지원했다.", "partner_name": "진주보건소", "role": "음향시설 지원", "value": null, "unit": null, "evidence": "음향시설이 없었던 터라 진주보건소의 지원을 받고, 인기 노래강사를 찾아 섭외했다.", "speaker_role": "서술"},
+    {"type": "partner", "text": "노래강사가 예산 부족 기간 2개월 동안 노력봉사를 했다.", "partner_name": "노래강사", "role": "노래교실 지도 및 노력봉사", "value": 2, "unit": "개월", "evidence": "연초에 예산 부족으로 2개월은 노래교실을 운영하지 못하는 상황이었는데, 강사님께서 노력봉사를 해주셨어요.", "speaker_role": "주거복지사"},
+    {"type": "operation", "text": "주거복지사가 직접 강사를 섭외하고 요일별 프로그램을 짜고 참가자를 모집했다.", "value": null, "unit": null, "evidence": "직접 발 벗고 강사를 섭외하고, 요일별로 다른 프로그램을 짜고, 참가자를 모집하는 등 건강쉼터 이용이 활성화되도록 노력을 기울였다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "노래교실은 매주 수요일 오전 10시부터 2시간 동안 열린다.", "value": 2, "unit": "시간", "evidence": "매주 수요일 오전 10시부터 2시간 동안 이곳에서 노래교실이 열린다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "첫해에는 원예·미술·요가·다도·그림책 만들기 등 정적인 프로그램을 운영했다.", "value": null, "unit": null, "evidence": "첫해에는 원예나 미술, 요가, 다도, 그림책 만들기와 같은 정적인 프로그램으로 입주민의 정서적 안정감 높이려고 노력했지만", "speaker_role": "서술"},
+    {"type": "operation", "text": "사업 초기부터 관계 기관들과 소통하며 욕구 맞춤 프로그램을 유치했다.", "value": null, "unit": null, "evidence": "조연길 주거복지사는 사업 초기부터 입주민 욕구에 맞춘 프로그램을 유치·운영하기 위해 관계 기관들과 적극적으로 소통하며 협력에 힘썼다.", "speaker_role": "서술"},
+    {"type": "outcome", "text": "건강쉼터에 월평균 25명이 참여한다.", "value": 25, "unit": "명", "evidence": "건강쉼터에는 월평균 25명의 입주민이 프로그램에 참여하고 있다.", "speaker_role": "서술"},
+    {"type": "outcome", "text": "참여자 중 11명이 진주복지박람회에서 아파트 합창단으로 무대에 올랐다.", "value": 11, "unit": "명", "evidence": "이 중 11명은 최근 아파트를 벗어나 큰 무대에 서는 일도 있었다. 진주복지박람회에서 아파트 합창단으로 무대에 오른 것이다.", "speaker_role": "서술"},
+    {"type": "outcome", "text": "참여자들이 자발적 홍보대사가 되고 결석자를 확인하는 이웃지킴이 역할까지 한다.", "value": null, "unit": null, "evidence": "간식을 챙겨와 나눠 드시고, 누가 결석하면 무슨 일이 생겼는지 확인하며 이웃지킴이 역할까지 하세요.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "가사 외우기와 율동으로 인지력과 신체 능력이 좋아졌다.", "value": null, "unit": null, "evidence": "가사를 외우고 율동을 따라 하는 동안 인지력에 신체 능력까지 좋아지셨어요.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "거동이 불편했던 입주민이 걷는 연습을 해 몸 상태가 호전됐다.", "value": null, "unit": null, "evidence": "거동이 불편했던 한 입주민은 더 오래 노래하고 춤추고 싶다며 걷는 연습을 많이 하더니 몸 상태가 눈에 띄게 호전됐어요.", "speaker_role": "주거복지사"},
+    {"type": "outcome", "text": "낯을 가리던 어르신들이 용건 없이도 상담실에 들르는 관계로 발전했다.", "value": null, "unit": null, "evidence": "처음엔 낯을 가리던 어르신들이 이제는 아무 용건이 없어도 \"우리 연길이 보러 왔지\" 하면서 주거복지상담실에 커피 마시러 들르는 관계로까지 발전했다.", "speaker_role": "서술"},
+    {"type": "lesson", "text": "엘리베이터가 설치되어 장애인 입주민도 함께 어울리길 기다리고 있다.", "value": null, "unit": null, "evidence": "건물에 어서 엘리베이터가 설치되어 장애인 입주민들이 함께 어울리는 날이 오길 기다리고 있다.", "speaker_role": "서술"}
+  ],
+  "obstacles": [
+    {"obstacle": "커뮤니티 공간을 리모델링했지만 입주민들이 참여에 소극적이었다.", "obstacle_category": "주민 참여·신뢰", "obstacle_evidence": "리모델링까지 해서 꽤 괜찮은 입주민 공간이 생겼는데, 막상 참여엔 소극적이셨어요.", "solution": "홍보물을 직접 나눠주고 체험 학습 등으로 지속적으로 접촉하며 유대관계를 쌓았다.", "solution_strategy": "관계 형성·신뢰 쌓기", "solution_evidence": "홍보물을 직접 나눠드리고, 단지 내 체험 학습 등을 운영하며 지속적인 접촉을 통해 입주민들과 유대관계를 쌓는 것부터 했어요.", "status": "해결"},
+    {"obstacle": "사업연도가 계속될수록 자원 한계에 부딪혔다.", "obstacle_category": "예산·재원", "obstacle_evidence": "사업연도가 계속될수록 자원 한계에 대한 어려움도 있었지만", "solution": "주거복지사가 직접 강사를 섭외하고 프로그램을 짜고 참가자를 모집했다.", "solution_strategy": "기타", "solution_evidence": "직접 발 벗고 강사를 섭외하고, 요일별로 다른 프로그램을 짜고, 참가자를 모집하는 등", "status": "일부 해결"},
+    {"obstacle": "노래교실을 위한 음향시설이 없었다.", "obstacle_category": "공간·시설", "obstacle_evidence": "음향시설이 없었던 터라", "solution": "진주보건소의 지원을 받았다.", "solution_strategy": "대체 자원 연계", "solution_evidence": "진주보건소의 지원을 받고, 인기 노래강사를 찾아 섭외했다.", "status": "해결"},
+    {"obstacle": "연초 예산 부족으로 2개월간 노래교실을 운영할 수 없었다.", "obstacle_category": "예산·재원", "obstacle_evidence": "연초에 예산 부족으로 2개월은 노래교실을 운영하지 못하는 상황이었는데", "solution": "강사가 노력봉사를 해주었다.", "solution_strategy": "외부 공모·후원", "solution_evidence": "강사님께서 노력봉사를 해주셨어요.", "status": "해결"},
+    {"obstacle": "지하상가에 엘리베이터가 없어 장애인 입주민이 참여하지 못한다.", "obstacle_category": "공간·시설", "obstacle_evidence": "지하상가에 엘리베이터가 없다 보니 참여하고 싶어도 못하는 장애인 10여 명이", "solution": null, "solution_strategy": null, "solution_evidence": null, "status": "미해결"}
+  ],
+  "summary": "진주가좌1단지 주거복지사가 진주시·LH경남본부 지원으로 미임대 지하상가에 건강쉼터를 만들고, 설문 결과를 반영해 진주보건소 지원과 강사 섭외로 노래교실 등 맞춤형 건강 프로그램을 운영했다. 월평균 25명이 참여하고 11명이 복지박람회 합창 무대에 섰으나, 엘리베이터가 없어 장애인 입주민은 여전히 참여하지 못한다."
+}

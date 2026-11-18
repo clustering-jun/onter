@@ -1,0 +1,7 @@
+kind,news_id,key,value,decision,decided_by,decided_at,note
+complex_link,N20260922_44c043,KOH_155,청원오송1단지,confirm,user,2026-11-17,통합표 주소가 청원오송휴먼시아1단지이고 청원오송 단지는 하나뿐
+complex_link,N20240701_1af188,KOH_267,경주용강관리소,confirm,user,2026-11-17,경주 용강 단지는 경주용강1 하나뿐(용강동 주공아파트)
+program_alias,,사랑의 한그릇,C03,add_alias,user,2026-11-17,식사 대접 행사
+program_alias,,사랑 나눔 축제,B01,add_alias,user,2026-11-17,취약계층 겨울나기 김장김치·생필품 나눔(같은 사건 기사 3건)
+program_phrase,,주민주도형 공동체 행사,,not_a_program,user,2026-11-17,경로잔치를 설명하는 말(기사는 A01로 연결됨)
+program_phrase,,노사공동 환경주간,,not_a_program,user,2026-11-17,기관 내부 캠페인(기사는 N06으로 연결됨)

@@ -1,0 +1,36 @@
+{
+  "model": "exaone3.5:7.8b",
+  "options": {
+    "temperature": 0.15,
+    "top_p": 0.9,
+    "repeat_penalty": 1.05,
+    "num_predict": 220,
+    "num_ctx": 2048,
+    "seed": 20261118
+  },
+  "workers": 8,
+  "n": 300,
+  "pass_first_try": 0.65,
+  "pass_after_retry": 0.92,
+  "template_fallback": 0.08,
+  "fail_reasons": {
+    "unknown_numbers": 2,
+    "banned": 0,
+    "form": {},
+    "binding": {
+      "invented": 130,
+      "too_many_sentences": 9
+    }
+  },
+  "banned_terms": {},
+  "mean_chars_llm": 276.5,
+  "mean_chars_template": 228.5,
+  "names_program": 0.8442,
+  "says_candidate": 1.0,
+  "seconds": 200.4,
+  "per_item_sec": 0.668,
+  "items_per_min": 89.8,
+  "n_this_run": 300,
+  "tokens_per_sec": 314.5,
+  "errors": 0
+}

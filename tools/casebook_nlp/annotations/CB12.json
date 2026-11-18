@@ -1,0 +1,27 @@
+{
+  "case_id": "CB12",
+  "complexes_mentioned": ["인천갈산2", "인천삼산", "인천만수7", "인천연수1", "부천옥길LH1", "중동한라1", "부천춘의", "중동덕유1"],
+  "programs": [
+    {"name": "추억 앨범 만들기", "summary": "학교 졸업·대학 캠퍼스·해외여행 경험이 없는 어르신의 소원을 풀어드리기 위해 컨셉 사진을 촬영하고 앨범을 선물하는 체험형 문화 활동", "operation": "크로마키 촬영 기법을 통해 추억 앨범을 제작하여 선물", "target": "고령의 입주민", "start": null, "evidence": "학교 졸업, 대학 캠퍼스, 해외여행 등에 대한 경험이 없는 어르신들의 소원을 풀어드리기 위해 컨셉으로 사진 촬영을 하고, 앨범을 선물해 드리는 체험형 문화 활동"}
+  ],
+  "elements": [
+    {"type": "need", "text": "학교를 제대로 못 다니고 해외에 가본 적 없다는 어르신들의 평소 이야기에서 컨셉의 힌트를 얻었다.", "value": null, "unit": null, "evidence": "\"나는 학교도 제대로 못 다녔어.\", \"해외를 아직 한 번도 못 가봤어.\" 어르신들의 평소 이야기에 힌트가 있었다.", "speaker_role": "서술"},
+    {"type": "need", "text": "어르신들께 가장 의미 있는 장면이 무엇일지를 고민했다.", "value": null, "unit": null, "evidence": "\"과연 어르신들께 가장 의미 있는 장면은 무엇일까?\"", "speaker_role": "서술"},
+    {"type": "target", "text": "인천권역 8개 단지의 고령 입주민이 대상이다.", "value": 8, "unit": "개", "evidence": "인천권역 8개 단지의 주거복지사들이 직접 복지관 강당과 야외 장소를 대여하고", "speaker_role": "서술"},
+    {"type": "resource", "text": "복지관 강당과 야외 장소를 대여하고 의상도 빌렸다.", "value": null, "unit": null, "evidence": "직접 복지관 강당과 야외 장소를 대여하고, 의상도 빌리고, 헤어·메이크업도 돕는다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "과거 영정사진 촬영 지원에서 확장된 활동이다.", "value": null, "unit": null, "evidence": "'추억 앨범 만들기'는 과거 영정사진 촬영 지원에서 확장된 활동이다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "주거복지사들이 컨셉에 따라 포즈 코칭을 하고 대기자에게 간식을 나눠준다.", "value": null, "unit": null, "evidence": "바뀌는 컨셉에 따라 포즈 코칭도 하고, 대기하는 어르신들이 지루하지 않게 간식도 나눠드린다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "학생, 대학교 졸업, 해외 유명 관광지 컨셉으로 촬영했다.", "value": null, "unit": null, "evidence": "학생 컨셉, 대학교 졸업 컨셉, 해외 유명 관광지 컨셉 등에 대한 반응이 뜨거웠다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "크로마키 촬영을 도입했고 꽤 성공적이었다.", "value": null, "unit": null, "evidence": "아무것도 없는 곳에서 포즈를 취하는 크로마키 촬영은 모두에게 도전이었지만 꽤 성공적이었다.", "speaker_role": "서술"},
+    {"type": "operation", "text": "가장 잘 나온 사진을 15장 내외로 골라 앨범으로 제작했다.", "value": 15, "unit": "장", "evidence": "주거복지사들은 어르신들이 가장 예쁘고 멋지게 나온 사진을 15장 내외로 골라 앨범으로 제작했다.", "speaker_role": "서술"},
+    {"type": "outcome", "text": "쑥스러워하는 입주민을 대기하던 어르신들이 서로 도와주는 분위기가 만들어졌다.", "value": null, "unit": null, "evidence": "혹여나 쑥스러워하는 사람이 있으면 대기하던 어르신들이", "speaker_role": "서술"},
+    {"type": "outcome", "text": "손사래 치던 어르신들도 앨범을 받고 감탄했다.", "value": null, "unit": null, "evidence": "처음엔 복지관이나 경로당에서 이미 찍어봤다며 손사래를 치시던 어르신들도 막상 앨범을 받아보면 감탄을 금치 못했다.", "speaker_role": "서술"},
+    {"type": "outcome", "text": "사진을 방에 붙여 매일 보거나 손님에게 자랑하는 어르신이 있다.", "value": null, "unit": null, "evidence": "촬영한 사진을 안방 벽에 정성스럽게 한 장, 한 장 붙여 놓고 매일 들여다보는 어르신도 있다.", "speaker_role": "서술"},
+    {"type": "outcome", "text": "앨범이 스스로의 삶을 긍정하고 자부심을 되찾는 계기가 된다.", "value": null, "unit": null, "evidence": "스스로의 삶을 긍정하고 자부심을 되찾아주는 계기가 된다.", "speaker_role": "서술"}
+  ],
+  "obstacles": [
+    {"obstacle": "이미 복지관이나 경로당에서 사진을 찍어봤다며 처음에는 손사래를 치는 어르신들이 있었다.", "obstacle_category": "주민 참여·신뢰", "obstacle_evidence": "처음엔 복지관이나 경로당에서 이미 찍어봤다며 손사래를 치시던 어르신들도", "solution": "어르신들의 소망을 반영한 다양한 컨셉으로 촬영해 앨범을 만들어 드렸다.", "solution_strategy": "방식 변경", "solution_evidence": "어렵게 마련한 자리인 만큼 어르신들께 '삶의 또 다른 추억'을 선물해 드리고 싶어서 다양한 컨셉을 접목해 봤어요.", "status": "해결"},
+    {"obstacle": "크로마키 촬영이 모두에게 낯설어 쑥스러워하는 어르신이 있었다.", "obstacle_category": "대상자 특성", "obstacle_evidence": "아무것도 없는 곳에서 포즈를 취하는 크로마키 촬영은 모두에게 도전이었지만", "solution": "포즈 코칭을 하고 대기하던 어르신들이 서로 도와주었다.", "solution_strategy": "주민 참여 유도", "solution_evidence": "혹여나 쑥스러워하는 사람이 있으면 대기하던 어르신들이", "status": "해결"}
+  ],
+  "summary": "인천권역 8개 단지 주거복지사들이 학교·해외여행 경험이 없는 고령 입주민의 소망을 반영해 장소·의상을 대여하고 크로마키로 학생·졸업·해외 관광지 컨셉 사진을 촬영해 앨범을 선물했다. 어르신들이 앨범을 자랑하며 자부심을 되찾는 계기가 되었다."
+}
