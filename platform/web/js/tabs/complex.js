@@ -33,7 +33,7 @@ export async function render(view, arg, alive) {
         <div class="sec row"><a class="btn pri" href="#/recommend">추천 프로그램 보기</a><a class="btn" href="#/plan">실행 계획</a><a class="btn" href="#/kg">Knowledge Graph</a></div></div>
       <div class="grid" style="align-content:start">
         <figure class="panel photo ${S.meta.photos.includes(cid) ? '' : 'sample'}"><img src="img/complex/${S.meta.photos.includes(cid) ? cid : 'default'}.jpg" alt="${esc(d.name)} 전경">
-          <figcaption><span class="real">${esc(d.name)}</span><span class="smp">예시 사진입니다. 이 단지의 사진이 아닙니다.</span></figcaption></figure>
+          <figcaption><span class="real">${esc(d.name)} 단지 사진</span><span class="smp">예시 사진입니다. 이 단지의 사진이 아닙니다.</span></figcaption></figure>
         <div class="panel"><h3>분야별 필요와 공급 <small class="muted">전체 단지 가운데 위치</small></h3>
           <div id="needBox">${needChart(d.need, { controls: true })}</div>
           <div class="note" style="margin-top:10px">현장에서 확인한 필요가 있으면 낮음·보통·높음을 고르세요. 추천 계산에 그 값을 씁니다.</div>

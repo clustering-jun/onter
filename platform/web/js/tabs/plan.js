@@ -3,6 +3,7 @@ import { STATIC, S, post, $, esc, f, needPick, domChip, debounce, cx } from '../
 
 let lastReq = 0;
 
+const rng = g => `min="${g[0]}" max="${g[g.length - 1]}" step="${g[1] - g[0]}"`;   // 정적 판: 미리 계산한 격자에 맞춘 범위
 export async function render(view, arg, alive) {
   if (!S.cid) { view.innerHTML = needPick(); return; }
   const c = cx(), p = S.plan, k = S.knobs, cid = S.cid;
@@ -11,13 +12,13 @@ export async function render(view, arg, alive) {
       <div class="row"><a class="btn" href="#/recommend">추천 목록</a></div></div>
     <div class="grid g-side">
       <aside class="panel ctrl"><h3>한도와 조건</h3>
-        <div class="knob"><label for="pb">공단 쪽 연간 예산 <span class="num" id="pbv"></span></label><input id="pb" type="range" ${STATIC ? 'min="500000" max="2000000" step="500000"' : 'min="0" max="3000000" step="50000"'} value="${p.budget}"><small class="muted">단지·공단·LH가 부담하는 몫의 합계(외부 후원 제외)</small></div>
-        <div class="knob"><label for="ph">연간 인력 <span class="num" id="phv"></span></label><input id="ph" type="range" min="10" max="240" step="5" value="${p.hours}" ${STATIC ? 'disabled' : ''}><small class="muted">직원·봉사자가 들이는 시간(명×시간)</small></div>
-        <div class="knob"><label for="pn">프로그램 수 <span class="num" id="pnv"></span></label><input id="pn" type="range" ${STATIC ? 'min="4" max="8" step="2"' : 'min="1" max="10" step="1"'} value="${p.n_max}"></div>
+        <div class="knob"><label for="pb">공단 쪽 연간 예산 <span class="num" id="pbv"></span></label><input id="pb" type="range" ${STATIC ? rng(S.meta.grid.budget) : 'min="0" max="3000000" step="50000"'} value="${p.budget}"><small class="muted">단지·공단·LH가 부담하는 몫의 합계(외부 후원 제외)</small></div>
+        <div class="knob"><label for="ph">연간 인력 <span class="num" id="phv"></span></label><input id="ph" type="range" ${STATIC ? rng(S.meta.grid.hours) : 'min="10" max="240" step="5"'} value="${p.hours}"><small class="muted">직원·봉사자가 들이는 시간(명×시간)</small></div>
+        <div class="knob"><label for="pn">프로그램 수 <span class="num" id="pnv"></span></label><input id="pn" type="range" ${STATIC ? rng(S.meta.grid.n_max) : 'min="1" max="10" step="1"'} value="${p.n_max}"></div>
         <div><div class="row between"><span style="font-weight:600;font-size:0.933rem">분야별 최소 개수</span><button class="btn sm ghost" id="pauto" data-tip="필요가 높은 두 분야에서 1개씩 넣는 기본 조건으로 되돌립니다">자동</button></div>
           <div id="pmin" style="display:grid;grid-template-columns:1fr auto;gap:4px 8px;margin-top:4px;font-size:0.933rem"></div></div>
         <div class="knob"><label for="pw">필요 반영 정도 <span class="num" id="pwv"></span></label><input id="pw" type="range" min="0" max="0.5" step="0.05" value="${k.w}" ${STATIC ? 'disabled' : ''}><small class="muted">추천 화면의 값과 같이 움직입니다</small></div>
-        <div class="row between"><button class="btn sm ghost" id="preset">기본값으로</button><span class="ms" id="planMs"></span></div>${STATIC ? '<div class="muted" style="font-size:0.867rem">공개 시연판입니다. 예산과 프로그램 수만 미리 계산해 둔 단계로 바꿀 수 있습니다.</div>' : ''}
+        <div class="row between"><button class="btn sm ghost" id="preset">기본값으로</button><span class="ms" id="planMs"></span></div>${STATIC ? '<div class="muted" style="font-size:0.867rem">공개 시연판입니다. 예산·인력·프로그램 수를 미리 계산해 둔 단계로 바꿀 수 있습니다.</div>' : ''}
       </aside>
       <section class="grid" style="align-content:start">
         <div id="planNote"></div>

@@ -77,7 +77,7 @@ function draw(fit) {
   layer.clearLayers(); markers = {}; pulses = {};
   rows.forEach(c => {
     const col = sc.color(c), z = sc.zeroish && sc.zeroish(c), r = (5.4 + Math.sqrt(c.hh) / 5.8) * (z ? 0.8 : 1);
-    const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d', weight: col ? 1.2 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? 0.95 : 0.65, plain: !col || !!z, base: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d' });
+    const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d', weight: col ? 1.2 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? 0.95 : 0.65, plain: !col || !!z, bubblingMouseEvents: false, base: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d' });
     mk.bindTooltip(tipHtml(c), { direction: 'top', offset: [0, -r], className: 'mtip', opacity: 1 });
     mk.on('tooltipopen', () => { if (c.addr === undefined) { c.addr = ''; api('complex', { id: c.id }).then(d => { c.addr = d.addr || ''; mk.setTooltipContent(tipHtml(c)); }).catch(() => { }); } });
     mk.on('click', () => { selClosed = null; if (c.id === S.cid) placeSel(); else setComplex(c.id); });
@@ -99,14 +99,13 @@ function draw(fit) {
     else map.flyTo(...HOME, { duration: 0.7 });
   }
 }
-// 고른 단지의 설명 상자: 눌렀을 때 원 위에 뜨고 계속 떠 있다. 상자를 누르면 닫히고, 그 단지를 다시 누르면 다시 뜬다.
+// 고른 단지의 설명 상자: 눌렀을 때 원 위에 뜨고 계속 떠 있다. 지도의 빈 곳을 누르면 닫히고, 그 단지를 다시 누르면 다시 뜬다.
 function placeSel() {
   if (selTip) { selTip.remove(); selTip = null; }
   const c = selected && S.byId[selected], mk = c && markers[selected];
   if (!mk || !map || selClosed === selected) return;
   if (c.addr === undefined) { c.addr = ''; api('complex', { id: c.id }).then(d => { c.addr = d.addr || ''; if (selected === c.id) placeSel(); }).catch(() => { }); }   // 목록에 주소가 없으면(서버가 예전 판) 상세에서 가져온다
-  selTip = L.tooltip({ permanent: true, interactive: true, direction: 'top', offset: [0, -mk.options.radius - 6], className: 'mtip msel', opacity: 1 }).setLatLng([c.lat, c.lon]).setContent(tipHtml(c)).addTo(map);
-  selTip.getElement().addEventListener('click', e => { e.stopPropagation(); selClosed = selected; placeSel(); });
+  selTip = L.tooltip({ permanent: true, direction: 'top', offset: [0, -mk.options.radius - 6], className: 'mtip msel', opacity: 1 }).setLatLng([c.lat, c.lon]).setContent(tipHtml(c)).addTo(map);
 }
 function highlight() {
   if (selected && markers[selected]) {                       // 앞서 고른 단지: 테두리를 되돌리고 마우스 올림 설명을 다시 붙인다
@@ -159,6 +158,7 @@ export async function render(view) {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, opacity: 0.9, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> 기여자' }).addTo(map);
   map.createPane('pulse').style.zIndex = 390;                  // 원(캔버스, 400) 바로 아래
   layer = L.layerGroup().addTo(map);
+  map.on('click', () => { if (selTip) { selClosed = selected; placeSel(); } });   // 원의 클릭은 지도까지 올라오지 않게 해 두었다(bubblingMouseEvents)
   const bind = (id, k, fit) => $(id).addEventListener('input', e => { st[k] = e.target.value.trim(); draw(fit); });
   bind('#fq', 'q'); bind('#fm', 'metric'); bind('#fb', 'branch', true); bind('#ft', 'type');
   $('#freset').addEventListener('click', () => { Object.assign(st, { branch: '', type: '', q: '' }); render(view); });

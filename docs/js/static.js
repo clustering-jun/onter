@@ -18,7 +18,12 @@ async function excludedView(cid) {
   const names = Object.fromEntries((await get('programs')).map(p => [p.std_id, p.name]));
   return Object.entries(store.get(cid).excluded).map(([sid, e]) => ({ std_id: sid, name: names[sid] || sid, kind: e.kind, kind_label: KIND[e.kind] || e.kind, count: e.count, note: e.note || '' }));
 }
-const planKey = b => `${snap(b.budget ?? grid.budget[0], grid.budget)}|${snap(b.n_max ?? grid.n_max[0], grid.n_max)}`;
+// 실행 계획: 조건(예산|개수|인력)마다 [묶음 번호, 설명 문장, 출처]. 같은 묶음은 bodies에 한 번만 들어 있다.
+async function planOf(b) {
+  const d = await get('plan/' + b.id), k = [snap(b.budget ?? 1e6, grid.budget), snap(b.n_max ?? 6, grid.n_max), snap(b.hours ?? 80, grid.hours)];
+  const [i, text, source] = d.combos[k.join('|')];
+  return { plan: { ...d.bodies[i], budget: k[0], n_max: k[1], hours_limit: k[2], solve_ms: 0, ms: 0 }, brief: { text, source } };
+}
 
 export async function sget(path, p = {}) {
   switch (path) {
@@ -64,8 +69,8 @@ export async function sget(path, p = {}) {
 export async function spost(path, b = {}) {
   const st = b.id ? store.get(b.id) : null;
   switch (path) {
-    case 'plan': return (await get('plan/' + b.id))[planKey(b)].plan;
-    case 'llm/plan': return (await get('plan/' + b.id))[planKey(b)].brief;
+    case 'plan': return (await planOf(b)).plan;
+    case 'llm/plan': return (await planOf(b)).brief;
     case 'llm/explain': return (await get('cand/' + b.id))[b.sid].explain;
     case 'llm/checklist': return (await get('cand/' + b.id))[b.sid].checklist;
     case 'state/exclude': {

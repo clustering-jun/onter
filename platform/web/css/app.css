@@ -525,7 +525,7 @@ html{font-size:calc(clamp(13.5px,.42vw + 9px,17.5px)*.9)}
 @keyframes pulse-sel{0%{transform:scale(1);opacity:.85}100%{transform:scale(3.4);opacity:0}}
 @media (prefers-reduced-motion:reduce){.pulse i{animation:none}}
 .leaflet-tooltip.mtip{background:rgba(255,255,255,.86);backdrop-filter:blur(3px)}
-.leaflet-tooltip.mtip.msel{border:2px solid var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.28);white-space:normal;width:max-content;max-width:23rem;cursor:pointer}
+.leaflet-tooltip.mtip.msel{border:2px solid var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.28);white-space:normal;width:max-content;max-width:23rem}
 .leaflet-tooltip-top.mtip::before{border-top-color:rgba(255,255,255,.86)}
 .leaflet-tooltip-top.msel::before{border-top-color:var(--ink)}
 .legend{background:rgba(255,255,255,.82);backdrop-filter:blur(3px)}

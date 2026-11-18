@@ -4,7 +4,8 @@
     python tools/build_static.py --out ../site   # 다른 곳에
     python tools/build_static.py --limit 5       # 단지 5곳만(시험용)
 
-- 추천은 필요 반영 정도 × 분야 고르게의 격자(W × LAM)로, 실행 계획은 예산 × 프로그램 수의 격자(BUDGET × NMAX)로 미리 계산한다.
+- 추천은 필요 반영 정도 × 분야 고르게의 격자(W × LAM)로, 실행 계획은 예산 × 프로그램 수 × 인력의 격자(BUDGET × NMAX × HOURS)로 미리 계산한다.
+  실행 계획은 조건이 달라도 같은 묶음이 나오는 일이 많아서, 묶음은 한 번만 싣고 조건마다 번호로 가리킨다.
 - LLM 문장은 새로 만들지 않는다. 배치 결과와 data/llm_cache.json에 있는 것만 싣고, 없으면 규칙 문장·규칙 점검표를 싣는다.
   먼저 tools/prefill_llm.py로 캐시를 채워 두면 그만큼 LLM 문장이 들어간다.
 - 사용자 입력(data/user_state.json)은 싣지 않는다. Knowledge Graph 탭은 서버가 있어야 해서 뺀다.
@@ -25,8 +26,8 @@ import engine as G                   # noqa: E402
 from catalog import Catalog          # noqa: E402
 from llm_service import LLMService   # noqa: E402
 
-W, LAM = [0.0, 0.2, 0.4, 0.6], [0.0, 0.25, 0.5]
-BUDGET, NMAX = [500000, 1000000, 1500000, 2000000], [4, 6, 8]
+W, LAM = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5], [0.0, 0.25, 0.5, 0.75]
+BUDGET, NMAX, HOURS = [500000, 1000000, 1500000, 2000000, 2500000, 3000000], [3, 4, 5, 6, 7, 8], [40, 80, 120]
 KS = [5, 10, 15]
 
 
@@ -43,10 +44,13 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")
     out, t0 = Path(a.out).resolve(), time.time()
     if out.exists():
-        if not (out / ".onter-static").exists() and any(out.iterdir()):
+        ours = (out / ".onter-static").exists() or (out / "api").is_dir()          # 지우다 끊긴 폴더(api만 남음)도 이 스크립트가 만든 것으로 본다
+        if not ours and any(out.iterdir()):
             sys.exit(f"{out} 은(는) 이 스크립트가 만든 폴더가 아닙니다. 다른 --out을 주십시오.")
-        shutil.rmtree(out)
-    shutil.copytree(ROOT / "web", out, ignore=shutil.ignore_patterns("README.txt"))
+        shutil.rmtree(out, ignore_errors=True)                                     # Windows에서는 빈 폴더가 잠겨 남기도 한다. 파일만 다 지워졌으면 그대로 덮어쓴다
+        if out.exists() and any(p.is_file() for p in out.rglob("*")):
+            sys.exit(f"{out} 의 파일을 지우지 못했습니다. 다른 프로그램이 열고 있는지 확인하십시오.")
+    shutil.copytree(ROOT / "web", out, ignore=shutil.ignore_patterns("README.txt"), dirs_exist_ok=True)
     (out / ".onter-static").write_text("tools/build_static.py가 만든 폴더. 직접 고치지 않는다.\n", encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
     html = (out / "index.html").read_text(encoding="utf-8")
@@ -62,7 +66,7 @@ def main():
     A.ENG, A.KG, A.WEB = eng, None, out
     api = out / "api"
     ids = eng.ids[:a.limit or None]
-    meta = dict(A.meta(), static=True, kg=False, grid=dict(w=W, lam=LAM, budget=BUDGET, n_max=NMAX), built=time.strftime("%Y-%m-%d %H:%M"))
+    meta = dict(A.meta(), static=True, kg=False, grid=dict(w=W, lam=LAM, budget=BUDGET, n_max=NMAX, hours=HOURS), built=time.strftime("%Y-%m-%d %H:%M"))
     dump(api / "meta.json", meta)
     cx = eng.complex_list()
     dump(api / "complexes.json", [c for c in cx if c["id"] in set(ids)] if a.limit else cx)
@@ -95,13 +99,20 @@ def main():
             cand[sid] = dict(detail=G.run(lambda: eng.candidate(cid, sid, None)), explain=dict(text=ex["text"], source=ex["source"]),
                              checklist=dict(sections=ck["sections"], source=ck["source"]))
         dump(api / "cand" / f"{cid}.json", cand)
-        plans = {}
+        bodies, seen, combos = [], {}, {}
         for b in BUDGET:
             for nm in NMAX:
-                plan = G.run(lambda: eng.plan(cid, None, None, b, None, nm, None, None))
-                br = llm.plan_brief(plan, cid)
-                src["plan:" + br["source"]] += 1
-                plans[f"{b}|{nm}"] = dict(plan=plan, brief=dict(text=br["text"], source=br["source"]))
+                for hr in HOURS:
+                    plan = G.run(lambda: eng.plan(cid, None, None, b, hr, nm, None, None))
+                    br = llm.plan_brief(plan, cid)
+                    src["plan:" + br["source"]] += 1
+                    body = {k: v for k, v in plan.items() if k not in ("budget", "hours_limit", "n_max", "solve_ms", "ms")}
+                    key = json.dumps(body, ensure_ascii=False, sort_keys=True)
+                    if key not in seen:
+                        seen[key] = len(bodies)
+                        bodies.append(body)
+                    combos[f"{b}|{nm}|{hr}"] = [seen[key], br["text"], br["source"]]
+        plans = dict(bodies=bodies, combos=combos)
         dump(api / "plan" / f"{cid}.json", plans)
         if n % 20 == 0 or n == len(ids):
             print(f"  단지 {n}/{len(ids)}  {time.time() - t0:.0f}초", flush=True)

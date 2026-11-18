@@ -42,8 +42,8 @@ export async function render(view) {
     <div class="panel"><h3>만든 사람들</h3>
       <table class="info"><tbody>
         <tr><th>팀</th><td>온터팀 · 경상국립대학교</td></tr>
-        <tr><th>대표</th><td>박정준 <span class="muted">AI정보공학과</span></td></tr>
-        <tr><th>팀원</th><td>김서현 <span class="muted">AI정보공학과</span> · 구은정 <span class="muted">컴퓨터공학부</span></td></tr>
+        <tr><th>대표</th><td>박정준 <span class="muted" style="font-size:0.8rem">AI정보공학과</span></td></tr>
+        <tr><th>팀원</th><td>김서현 <span class="muted" style="font-size:0.8rem">AI정보공학과</span> · 구은정 <span class="muted" style="font-size:0.8rem">컴퓨터공학부</span></td></tr>
         <tr><th>문의</th><td><a href="mailto:cluster@gnu.ac.kr">cluster@gnu.ac.kr</a></td></tr>
       </tbody></table></div>
   </div>`;
