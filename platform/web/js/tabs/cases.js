@@ -100,7 +100,7 @@ export async function render(view, arg, alive) {
   view.innerHTML = `<div class="page"><div class="page-head"><div><h2>사례·소식</h2><p>주거복지사 활동 사례집의 복지 사례를 정리했습니다.</p></div></div>
     <div class="subtabs" id="csTabs"><button data-s="cards">사례 카드 ${d.cards.length}</button><button data-s="play">걸림돌·해결 ${d.obstacles.length}</button><button data-s="news">소식 ${d.news.length}</button></div>
     <div id="csBody" class="grid"></div>
-    <div class="note">사례집은 잘된 사례를 모은 자료입니다. 다른 단지에서 같은 결과가 난다는 뜻이 아니며, 해결 방식은 참고로만 보세요.</div></div>`;
+    </div>`;
   $('#csTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { sub = b.dataset.s; draw(); } });
   $('#csBody').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b && sub === 'play') { cat = b.dataset.cat; draw(); } });
   draw();

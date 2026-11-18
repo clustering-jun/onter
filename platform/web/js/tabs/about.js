@@ -39,5 +39,12 @@ export async function render(view) {
       <div class="note" style="margin-top:8px">후보가 모자랄 때 채우는 순서: 새 후보 → 과거 운영(재개 검토) → 보류 ${m.max_resurface}번 이하. 운영 불가능과 이미 운영 중은 채우는 데 쓰지 않습니다.</div></div>
     <div class="panel"><h3>LLM은 문장에만 씁니다 <span class="chip ${llm.available ? 'ok' : 'warn'}">${llm.static ? '미리 만들어 둔 문장' : llm.available ? '사용 가능 · ' + esc(llm.model || '') : '연결 안 됨'}</span></h3>
       <p style="margin:0">로컬 LLM(Ollama)은 추천 근거 문장 다듬기, 실행 점검표, 묶음 설명에만 씁니다. 순위·필요·비용 계산에는 쓰지 않습니다. 입력은 계산된 사실 목록뿐이고, 출력에 사실에 없는 숫자나 단정 표현, 뜻이 바뀐 수치가 있으면 버리고 규칙으로 만든 문장을 보여 줍니다. 자료는 이 PC 밖으로 나가지 않습니다.</p></div>
+    <div class="panel"><h3>만든 사람들</h3>
+      <table class="info"><tbody>
+        <tr><th>팀</th><td>온터팀 · 경상국립대학교</td></tr>
+        <tr><th>대표</th><td>박정준 <span class="muted">AI정보공학과</span></td></tr>
+        <tr><th>팀원</th><td>김서현 <span class="muted">AI정보공학과</span> · 구은정 <span class="muted">컴퓨터공학부</span></td></tr>
+        <tr><th>문의</th><td><a href="mailto:cluster@gnu.ac.kr">cluster@gnu.ac.kr</a></td></tr>
+      </tbody></table></div>
   </div>`;
 }
