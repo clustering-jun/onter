@@ -40,7 +40,7 @@ export const f = {
   ym: v => v ? String(v).replace('-', '.') : NA,
 };
 export const DOM = { N1: '#2a78d6', N2: '#eb6834', N3: '#1baa83', N4: '#8a63d2', N5: '#d4a418', N6: '#d95a8c' };
-export const TYPE_COLOR = { S1: '#2a9d8f', S2: '#e76f51', S3: '#264653' };   // 청록·테라코타·짙은 남청
+export const TYPE_COLOR = { S1: '#2b7bb5', S2: '#e63946', S3: '#1d3557' };   // 파랑·빨강·남청
 export const domChip = (d, label) => `<span class="chip dom ${d || 'none'}">${esc(label || (S.meta.needs[d] || '여러 분야'))}</span>`;
 export const stChip = (s, label) => `<span class="st ${s}">${esc(label || S.meta.status[s] || s)}</span>`;
 

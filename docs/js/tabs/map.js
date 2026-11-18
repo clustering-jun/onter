@@ -1,14 +1,31 @@
 // 지도(메인): Leaflet + OpenStreetMap 표준 타일. 단지를 눌러 고른다.
 import { S, api, $, esc, f, setComplex, complexCard, TYPE_COLOR } from '../core.js';
 
-// 색은 ColorBrewer 2.0(colorbrewer2.org, Cynthia Brewer)의 팔레트로 통일했다.
-//  WARM  OrRd 5단계  : 값이 클수록 눈여겨볼 기준(고령 비율, 필요, 경과 연수, 소형 세대 비율)
-//  COOL  GnBu 5단계  : 규모·활동·만족도처럼 크다고 주의할 일은 아닌 기준
-//  범주(단지 유형, 배치 여부)는 청록·테라코타·짙은 남청 세 색
-const WARM = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
-const COOL = ['#e0f3db', '#a8ddb5', '#7bccc4', '#43a2ca', '#0868ac'];
-const ZERO = '#f0f0f0', CNT = ['#fdbb84', '#ef6548', '#b30000'];                 // 0이 대부분인 건수: 0은 옅은 회색, 그 위는 OrRd 3단계
-const CAT2 = { yes: '#2a9d8f', no: '#e76f51' };
+// 색(사용자가 시안에서 고름)
+//  WARM  살구→진빨강 5단계 : 값이 클수록 눈여겨볼 기준(고령 비율, 필요, 경과 연수, 소형 세대 비율)
+//  COOL  회청→남색 5단계   : 규모·활동·만족도처럼 크다고 주의할 일은 아닌 기준
+//  단지 유형은 파랑·빨강·남청(core.js의 TYPE_COLOR), 배치 여부는 남청·빨강
+const WARM = ['#fcbba1', '#fc8d6a', '#f2553d', '#cb181d', '#7f0a12'];
+const COOL = ['#bdc9e1', '#8fb4d8', '#5a9bc8', '#2b7bb5', '#03467a'];
+const ZERO = '#ffffff', CNT = ['#fc8d6a', '#e0301f', '#7f0a12'];                 // 0이 대부분인 건수: 0은 흰 원, 그 위는 3단계
+const CAT2 = { yes: '#1d3557', no: '#e63946' };
+
+// 포인트 모양(사용자가 시안에서 고름): 속이 비치는 반투명 원에 같은 색의 진한 테두리. 겹친 단지가 비쳐 보인다.
+// 값이 없는 원(점선)과 0인 원(흰 원)은 Leaflet 기본 모양 그대로 그린다.
+const circ = (ctx, x, y, r) => { ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); };
+const PointCanvas = L.Canvas.extend({
+  _updateCircle(layer) {
+    const o = layer.options;
+    if (o.plain) return L.Canvas.prototype._updateCircle.call(this, layer);
+    if (!this._drawing || layer._empty()) return;
+    const p = layer._point, ctx = this._ctx, r = Math.max(Math.round(layer._radius), 1);
+    ctx.save();
+    circ(ctx, p.x, p.y, r); ctx.globalAlpha = o.weight >= 3 ? 0.95 : 0.45; ctx.fillStyle = o.fillColor; ctx.fill();
+    ctx.globalAlpha = 1; ctx.lineWidth = 2.2; ctx.strokeStyle = o.fillColor; ctx.stroke();
+    if (o.weight >= 3) { circ(ctx, p.x, p.y, r + 2.5); ctx.lineWidth = 3; ctx.strokeStyle = '#111'; ctx.stroke(); }   // 고른 단지
+    ctx.restore();
+  },
+});
 const coolKeys = new Set(['hh', 'pph', 'n_records', 'richness', 'hd', 'hc_overall', 'hc_welfare']);
 const METRICS = [
   { key: 'type', label: '단지 유형', kind: 'cat' },
@@ -21,7 +38,7 @@ const METRICS = [
   { key: 'hd', label: '홈닥터 지원(100세대당 월)', fmt: v => f.n1(v) + '건' }, { key: 'ld', label: '고독사 기록 건수(2019~2026)', fmt: v => f.int(v) + '건', count: [1, 3], zero: '기록 없음(0건)' },
   { key: 'hc_overall', label: '해피콜 종합 만족도', fmt: v => f.n1(v) + '점', missing: '조사 값 없음' }, { key: 'hc_welfare', label: '해피콜 복지 만족도', fmt: v => f.n1(v) + '점', missing: '조사 값 없음' },
 ];
-let map, layer, markers = {}, pulses = {}, st = { metric: 'type', branch: '', type: '', q: '' }, selected = null;
+let map, layer, selTip = null, markers = {}, pulses = {}, st = { metric: 'type', branch: '', type: '', q: '' }, selected = null;
 const HOME = [[36.3, 127.8], 7];
 
 const val = (c, key) => key.startsWith('need.') ? c.need[key.slice(5)] : c[key];
@@ -64,13 +81,13 @@ function draw(fit) {
   const rows = S.complexes.filter(passes), sc = scale(st.metric, S.complexes);
   layer.clearLayers(); markers = {}; pulses = {};
   rows.forEach(c => {
-    const col = sc.color(c), z = sc.zeroish && sc.zeroish(c), r = (5.4 + Math.sqrt(c.hh) / 5.8) * (z ? 0.7 : 1);
-    const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#9aa3af' : '#3d4654') : '#626d7d', weight: col ? 0.9 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? (z ? 0.6 : 0.95) : 0.65, base: col ? (z ? '#9aa3af' : '#3d4654') : '#626d7d' });
+    const col = sc.color(c), z = sc.zeroish && sc.zeroish(c), r = (5.4 + Math.sqrt(c.hh) / 5.8) * (z ? 0.8 : 1);
+    const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d', weight: col ? 1.2 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? 0.95 : 0.65, plain: !col || !!z, base: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d' });
     mk.bindTooltip(tipHtml(c, sc), { direction: 'top', offset: [0, -r], className: 'mtip', opacity: 1 });
     mk.on('click', () => setComplex(c.id));
     mk.addTo(layer); markers[c.id] = mk;
     if (col && !z) {                                           // 반짝임: 원 뒤에서 같은 색 고리가 퍼졌다 사라진다. 단지마다 박자를 달리한다
-      const dur = 2.6 + Math.random() * 1.8;
+      const dur = 2.4 + Math.random() * 1.6;
       pulses[c.id] = L.marker([c.lat, c.lon], { pane: 'pulse', interactive: false, keyboard: false,
         icon: L.divIcon({ className: 'pulse', iconSize: [2 * r, 2 * r], html: `<i style="background:${col};animation-duration:${dur.toFixed(2)}s;animation-delay:-${(Math.random() * dur).toFixed(2)}s"></i>` }) }).addTo(layer);
     }
@@ -91,6 +108,10 @@ function highlight() {
   Object.entries(pulses).forEach(([id, p]) => p.getElement() && p.getElement().classList.toggle('sel', id === S.cid));
   selected = S.cid;
   if (selected && markers[selected]) { markers[selected].setStyle({ color: '#111', weight: 3.5 }); markers[selected].bringToFront(); }
+  if (selTip) { selTip.remove(); selTip = null; }
+  const sc = selected && S.byId[selected];                      // 고른 단지에는 이름과 주소를 계속 띄워 둔다
+  if (sc && map && markers[selected]) selTip = L.tooltip({ permanent: true, direction: 'top', offset: [0, -markers[selected].options.radius - 6], className: 'mtip msel', opacity: 1 })
+    .setLatLng([sc.lat, sc.lon]).setContent(`<b class="t">${esc(sc.name)}</b><span class="k">${esc(sc.addr || '')}</span>`).addTo(map);
   document.querySelectorAll('#clist button').forEach(b => b.classList.toggle('on', b.dataset.id === S.cid));
 }
 async function card() {
@@ -112,7 +133,7 @@ export function select(cid) {
   highlight(); card();
   const c = S.byId[cid]; if (c && map) map.flyTo([c.lat, c.lon], Math.max(map.getZoom(), 11), { duration: 0.6 });
 }
-export function leave() { if (map) { map.stop(); layer.clearLayers(); map.remove(); map = null; markers = {}; pulses = {}; } }   // 이동 중에 탭을 떠나도 그리기 오류가 나지 않게 멈추고 비운다
+export function leave() { if (map) { map.stop(); layer.clearLayers(); map.remove(); map = null; selTip = null; markers = {}; pulses = {}; } }   // 이동 중에 탭을 떠나도 그리기 오류가 나지 않게 멈추고 비운다
 
 export async function render(view) {
   const branches = [...new Set(S.complexes.map(c => c.branch))].sort((a, b) => a.localeCompare(b, 'ko'));
@@ -128,7 +149,7 @@ export async function render(view) {
     <div class="maparea"><div id="map" aria-label="단지 지도"></div><div class="legend" id="legend"></div></div>
     <aside class="mapcard" id="mapcard"></aside>
   </div>`;
-  map = L.map('map', { zoomControl: true, preferCanvas: true }).setView(...HOME);
+  map = L.map('map', { zoomControl: true, renderer: new PointCanvas({ padding: 0.5 }) }).setView(...HOME);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, opacity: 0.9, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> 기여자' }).addTo(map);
   map.createPane('pulse').style.zIndex = 390;                  // 원(캔버스, 400) 바로 아래
   layer = L.layerGroup().addTo(map);

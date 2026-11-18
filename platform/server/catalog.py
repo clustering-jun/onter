@@ -1,4 +1,5 @@
 """조회용 자료: 프로그램 사전, 검색, 사례집·뉴스, 해피콜, 분석용 단지 표. 계산은 하지 않고 전처리 자료를 읽어 보여 준다."""
+import json
 import re
 
 import pandas as pd
@@ -117,6 +118,16 @@ class Catalog:
                  for _, x in self.cards.iterrows() if q in str(x["card_text"])][:6]
         news = [dict(news_id=x["news_id"], title=x["title"], date=x["date"], outlet=x["outlet"], url=x["url"]) for _, x in self.articles.iterrows() if q in str(x["title"])][:6]
         return clean(dict(q=q, programs=progs, complexes=cx, cards=cards, news=news))
+
+    # ───────── 정부·지자체 복지서비스(한국사회보장정보원 목록. tools/welfare_services/fetch.py로 받는다) ─────────
+    def welfare(self):
+        if getattr(self, "_welfare", None) is None:
+            d = C.DATA / "welfare_services_v1"
+            if not (d / "meta.json").exists():
+                return dict(meta=None, central=[], local=[])
+            load = lambda n: json.loads((d / n).read_text(encoding="utf-8"))
+            self._welfare = dict(meta=load("meta.json"), central=load("central.json"), local=load("local.json"))
+        return self._welfare
 
     # ───────── 사례집·뉴스 ─────────
     def cases(self):

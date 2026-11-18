@@ -23,7 +23,7 @@ const planKey = b => `${snap(b.budget ?? grid.budget[0], grid.budget)}|${snap(b.
 export async function sget(path, p = {}) {
   switch (path) {
     case 'meta': { const m = await get('meta'); grid = m.grid; return m; }
-    case 'complexes': case 'programs': case 'cases': case 'happycall': case 'analytics': return get(path);
+    case 'complexes': case 'programs': case 'cases': case 'happycall': case 'analytics': case 'welfare': return get(path);
     case 'llm/status': return { available: false, static: true };
     case 'complex': {
       const d = structuredClone((await get('complex/' + p.id)).complex), st = store.get(p.id);

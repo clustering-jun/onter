@@ -70,7 +70,7 @@ def main():
     dump(api / "programs.json", progs)
     for p in progs:
         dump(api / "program" / f"{p['std_id']}.json", cat.program(p["std_id"]))
-    for name in ("cases", "happycall", "analytics"):
+    for name in ("cases", "happycall", "analytics", "welfare"):
         dump(api / f"{name}.json", getattr(cat, name)())
 
     src, prefix_miss = Counter(), 0

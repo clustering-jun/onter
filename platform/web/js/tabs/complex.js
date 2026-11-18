@@ -1,4 +1,5 @@
 // 단지 현황: 단지 카드 + 통합 자료 전부(기본 정보, 연령, 필요 지표 원값, 운영 이력, 최근 기록, 상태표, 비슷한 단지, 접근성, 홈닥터, 해피콜, 그 밖의 기록)
+import { panel as welfarePanel } from './welfare.js';
 import { STATIC, buildToc, S, api, post, $, $$, esc, f, needPick, complexCard, needChart, hbars, stChip, domChip, setComplex, table, toast, DOM, NA, monthBars, pos, happycallBlock, TYPE_COLOR } from '../core.js';
 
 const ST_ORDER = ['running', 'paused', 'not_run', 'no_record', 'declared', 'snoozed', 'infeasible'];
@@ -139,12 +140,15 @@ export async function render(view, arg, alive) {
         <div id="exList">${d.user.excluded.length ? d.user.excluded.map(e => `<div class="row between" style="padding:3px 0"><span>${esc(e.name)} <span class="chip ${e.kind === 'infeasible' ? 'bad' : e.kind === 'not_now' ? 'warn' : ''}">${esc(e.kind_label)}${e.kind === 'not_now' ? ' ' + e.count + '번' : ''}</span></span><button class="btn sm" data-restore="${e.std_id}">되돌리기</button></div>`).join('') : '<span class="muted">없음</span>'}</div></div>
     </div>
 
+    <div class="panel"><h3>주민에게 안내할 수 있는 정부·지자체 복지서비스</h3><div id="wfBox"><div class="empty"><span class="spin"></span></div></div></div>
+
     <div class="grid g3">${Object.entries(kinds).map(([k, [t, h]], i) => `<div class="panel" data-toc="${i ? '-' : '비슷한 단지'}"><h3>${t}</h3><div class="muted" style="font-size:0.867rem;margin:-4px 0 6px">${h}</div>
       ${d.peers.filter(x => x.kind === k).map(x => `<div class="row between" style="padding:5px 0;border-bottom:1px solid var(--line2)"><a href="#/complex/${x.id}">${esc(x.name)}</a>
         <span class="muted" style="font-size:0.867rem" data-tip="구성 유사도 ${f.n2(x.struct)} · 운영 유사도 ${f.n2(x.behav)} · 거리 유사도 ${f.n2(x.geo)}">${esc(S.meta.types[x.type] || '')} · ${f.int(x.hh)}세대${x.same_branch ? ' · 같은 지사' : ''}</span></div>`).join('') || '<div class="muted">자료 없음</div>'}</div>`).join('')}</div>
   </div>`;
 
   buildToc(view);
+  welfarePanel($('#wfBox'), cid);
   $('#needBox').addEventListener('click', async e => {
     const btn = e.target.closest('.seg button'); if (!btn) return;
     const domain = btn.parentElement.dataset.domain, level = btn.dataset.level || null;

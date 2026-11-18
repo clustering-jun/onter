@@ -520,7 +520,18 @@ html.fullbleed .top{padding-left:20px;padding-right:20px}
 html{font-size:calc(clamp(13.5px,.42vw + 9px,17.5px)*.9)}
 .pulse{pointer-events:none}
 .pulse i{display:block;width:100%;height:100%;border-radius:50%;opacity:0;animation:pulse 3s ease-out infinite;will-change:transform,opacity}
-.pulse.sel i{animation-name:pulse-sel;animation-duration:1.5s!important}
-@keyframes pulse{0%{transform:scale(1);opacity:.55}75%{opacity:0}100%{transform:scale(2.5);opacity:0}}
-@keyframes pulse-sel{0%{transform:scale(1);opacity:.75}100%{transform:scale(3.4);opacity:0}}
+.pulse.sel i{animation-name:pulse-sel;animation-duration:1.6s!important}
+@keyframes pulse{0%{transform:scale(1);opacity:.65}80%{opacity:0}100%{transform:scale(2.4);opacity:0}}
+@keyframes pulse-sel{0%{transform:scale(1);opacity:.85}100%{transform:scale(3.4);opacity:0}}
 @media (prefers-reduced-motion:reduce){.pulse i{animation:none}}
+.leaflet-tooltip.mtip.msel{background:#111;color:#fff;border-color:#111;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:900}
+.mtip.msel .t{color:#fff}
+.mtip.msel .k{color:#d5dae2;display:block;width:max-content;max-width:24rem;white-space:normal}
+.leaflet-tooltip-top.msel::before{border-top-color:#111}
+.wfcard{cursor:default}
+.wfcard p{margin:8px 0 10px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.wfcard .pgmeta{flex-wrap:wrap;gap:4px 14px}
+.wfline{display:grid;gap:3px;padding:9px 0;border-bottom:1px solid var(--line2);color:var(--ink);text-decoration:none}
+.wfline:hover b{color:var(--accent)}
+.wfline>span:nth-child(2){font-size:0.933rem;color:var(--ink2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pgtool select{max-width:11rem}

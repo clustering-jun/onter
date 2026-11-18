@@ -16,3 +16,6 @@ __pycache__/
 /platform/data/user_state.json
 /platform/data/*.tmp
 /platform/data/llm_generated/run.log
+
+# API 키
+/.secrets/

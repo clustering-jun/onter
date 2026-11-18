@@ -1,5 +1,6 @@
 // 프로그램 사전: 목록 화면(검색·분야·정렬, 카드) → 프로그램을 누르면 상세 화면(#/programs/ID)으로 넘어간다
 import { S, api, cached, $, $$, esc, f, domChip, hbars, monthBars, debounce, NA, DOM } from '../core.js';
+import * as welfare from './welfare.js';
 
 const st = { q: '', dom: '', sort: 'adoption' };
 const SORTS = {
@@ -18,7 +19,7 @@ const card = r => `<a class="pgcard" href="#/programs/${r.std_id}">
 
 async function list(view, all, alive) {
   view.innerHTML = `<div class="page">
-    <div class="page-head"><div><h2>프로그램 사전</h2><p>표준 프로그램 ${all.length}종. 프로그램을 누르면 자세한 내용이 열립니다.</p></div></div>
+    <div class="page-head"><div><h2>프로그램 사전</h2><p>표준 프로그램 ${all.length}종. 프로그램을 누르면 자세한 내용이 열립니다.</p></div>${welfare.modeToggle('programs')}</div>
     <div class="panel pgtool">
       <input id="pgQ" type="search" placeholder="이름이나 하고 싶은 일로 찾기 (예: 빨래, 어르신 안부, 스마트폰 교육)" value="${esc(st.q)}">
       <div class="row between"><div class="row" id="pgD"><button class="btn sm ${st.dom ? '' : 'pri'}" data-d="">전체</button>${S.meta.need_ids.map(d => `<button class="btn sm ${st.dom === d ? 'pri' : ''}" data-d="${d}">${esc(S.meta.needs[d])}</button>`).join('')}</div>
@@ -27,6 +28,7 @@ async function list(view, all, alive) {
     <div id="pgHits"></div>
     <div class="muted" id="pgCount"></div>
     <div class="pggrid" id="pgGrid"></div></div>`;
+  welfare.bindToggle();
   const draw = async () => {
     let rows = all.filter(r => !st.dom || r.domain === st.dom);
     if (st.q) {
@@ -97,6 +99,7 @@ async function detail(view, sid, all, alive) {
 }
 
 export async function render(view, arg, alive) {
+  if (arg === 'welfare') return welfare.render(view, alive);
   const all = await cached('programs', () => api('programs'));
   if (!alive()) return;
   if (arg && all.some(x => x.std_id === arg)) return detail(view, arg, all, alive);

@@ -306,7 +306,8 @@ class Engine:
         out = []
         for u, cid in enumerate(self.ids):
             hc = self.happycall_for(cid)
-            out.append(dict(id=cid, name=c.at[cid, "name"], branch=c.at[cid, "branch"], lat=c.at[cid, "lat"], lon=c.at[cid, "lon"], region=c.at[cid, "region"],
+            ad = str(c.at[cid, "addr"]).split()
+            out.append(dict(id=cid, name=c.at[cid, "name"], branch=c.at[cid, "branch"], lat=c.at[cid, "lat"], lon=c.at[cid, "lon"], region=c.at[cid, "region"], sido=ad[0] if ad else None, sgg=ad[1] if len(ad) > 1 else None, addr=c.at[cid, "addr"],
                             supply=c.at[cid, "supply"], type=pf.at[cid, "type"], hh=c.at[cid, "hh"], age60=c.at[cid, "age60"], age80=c.at[cid, "age80"],
                             age_u20=c.at[cid, "age_u20"], pph=c.at[cid, "pph"], years=c.at[cid, "years"], deployed=int(c.at[cid, "deployed"]),
                             has_records=bool(self.has_rec[u]), n_records=pf.at[cid, "n_records"] if self.has_rec[u] else None,

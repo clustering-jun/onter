@@ -93,6 +93,8 @@ def api_get(route, q):
         return CAT.happycall()
     if route == "analytics":
         return CAT.analytics()
+    if route == "welfare":
+        return CAT.welfare()
     if route == "state":
         return dict(STORE.get(cid), excluded_view=ENG._excluded_view(st))
     if route == "llm/status":
