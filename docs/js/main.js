@@ -1,4 +1,4 @@
-import { STATIC, S, api, $, $$, esc, on, setComplex, initTip, buildToc } from './core.js';
+import { S, api, $, $$, esc, on, setComplex, initTip, buildToc } from './core.js';
 import * as map from './tabs/map.js';
 import * as complex from './tabs/complex.js';
 import * as recommend from './tabs/recommend.js';
@@ -63,20 +63,9 @@ async function llmDot() {
   } catch { el.className = 'llm off'; }
 }
 
-// 강조색 시안(고르는 중): 로컬 판에서만 머리 오른쪽에 선택 상자를 띄운다. 정해지면 app.css의 --accent를 바꾸고 이 부분을 지운다.
-const ACCENTS = [['#1f6f8b', '지금 색(청록)'], ['#1d3557', '남색'], ['#2b59c3', '로열 블루'], ['#0f766e', '틸'], ['#1e6f50', '진초록'], ['#5b3fa0', '보라'], ['#8c2f5f', '자주'], ['#9b2c2c', '와인'], ['#b5532a', '테라코타'], ['#8a5a14', '황토'], ['#2f3742', '차콜']];
-function accentTrial() {
-  const set = c => { const r = document.documentElement.style; r.setProperty('--accent', c); r.setProperty('--accent-soft', `color-mix(in srgb, ${c} 12%, #fff)`); try { localStorage.setItem('onter.accent', c); } catch { } };
-  let cur = ACCENTS[0][0]; try { cur = localStorage.getItem('onter.accent') || cur; } catch { }
-  const sel = document.createElement('select'); sel.className = 'acctrial'; sel.setAttribute('aria-label', '강조색 시안');
-  sel.innerHTML = ACCENTS.map(([c, n], i) => `<option value="${c}" ${c === cur ? 'selected' : ''}>강조색 ${i + 1} ${n}</option>`).join('');
-  sel.addEventListener('input', () => set(sel.value));
-  $('.top-right').prepend(sel); set(cur);
-}
-
 (async function start() {
   initTip(); picker();
-  if (!STATIC) accentTrial();
+  try { localStorage.removeItem('onter.accent'); } catch { }
   try {
     [S.meta, S.complexes] = await Promise.all([api('meta'), api('complexes')]);
   } catch (e) {

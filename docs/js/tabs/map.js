@@ -79,6 +79,7 @@ function draw(fit) {
     const col = sc.color(c), z = sc.zeroish && sc.zeroish(c), r = (5.4 + Math.sqrt(c.hh) / 5.8) * (z ? 0.8 : 1);
     const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d', weight: col ? 1.2 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? 0.95 : 0.65, plain: !col || !!z, base: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d' });
     mk.bindTooltip(tipHtml(c), { direction: 'top', offset: [0, -r], className: 'mtip', opacity: 1 });
+    mk.on('tooltipopen', () => { if (c.addr === undefined) { c.addr = ''; api('complex', { id: c.id }).then(d => { c.addr = d.addr || ''; mk.setTooltipContent(tipHtml(c)); }).catch(() => { }); } });
     mk.on('click', () => { selClosed = null; if (c.id === S.cid) placeSel(); else setComplex(c.id); });
     mk.addTo(layer); markers[c.id] = mk;
     if (col && !z) {                                           // 반짝임: 원 뒤에서 같은 색 고리가 퍼졌다 사라진다. 단지마다 박자를 달리한다
@@ -103,6 +104,7 @@ function placeSel() {
   if (selTip) { selTip.remove(); selTip = null; }
   const c = selected && S.byId[selected], mk = c && markers[selected];
   if (!mk || !map || selClosed === selected) return;
+  if (c.addr === undefined) { c.addr = ''; api('complex', { id: c.id }).then(d => { c.addr = d.addr || ''; if (selected === c.id) placeSel(); }).catch(() => { }); }   // 목록에 주소가 없으면(서버가 예전 판) 상세에서 가져온다
   selTip = L.tooltip({ permanent: true, interactive: true, direction: 'top', offset: [0, -mk.options.radius - 6], className: 'mtip msel', opacity: 1 }).setLatLng([c.lat, c.lon]).setContent(tipHtml(c)).addTo(map);
   selTip.getElement().addEventListener('click', e => { e.stopPropagation(); selClosed = selected; placeSel(); });
 }

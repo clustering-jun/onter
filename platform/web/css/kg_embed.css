@@ -1,4 +1,4 @@
-:root{--ink:#18202b;--sub:#626d7d;--green:#1f6f8b;--line:#e3e6eb;--paper:#f5f6f8}
+:root{--ink:#18202b;--sub:#626d7d;--green:#1e6f50;--line:#e3e6eb;--paper:#f5f6f8}
 html{font-size:15px}
 body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif!important;font-size:15px;line-height:1.6;letter-spacing:.005em;-webkit-font-smoothing:antialiased}
 button,input{font-family:inherit}
@@ -7,7 +7,7 @@ button,input{font-family:inherit}
 .app-shell{height:calc(100dvh - 60px)}
 .search-trigger{background:#fff;border-color:var(--line);border-radius:8px;font-size:14px;flex:1;max-width:520px}
 .top-home{border:1px solid var(--line);border-radius:8px;background:#fff;margin-left:auto;font-size:13px}
-.rail{padding-top:16px} .rail-item small{font-size:12px} .rail-item.active{color:#1f6f8b;background:#e6f1f5}
+.rail{padding-top:16px} .rail-item small{font-size:12px} .rail-item.active{color:#1e6f50;background:#e4eeea}
 .graph-stage{background-color:#f5f6f8;background-image:radial-gradient(#c3c9d255 .8px,transparent .8px)}
 .inspector{font-size:14.5px}
 
