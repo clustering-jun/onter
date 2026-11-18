@@ -545,3 +545,17 @@ html{font-size:calc(clamp(13.5px,.42vw + 9px,17.5px)*.9)}
 .btn.pri,.seg button.on,.toc button.on,.rrow.on .rk,.rkbig{color:var(--accent);font-weight:700}
 .btn.pri{border-color:color-mix(in srgb,var(--accent) 45%,#fff)}
 .btn.pri:hover{background:color-mix(in srgb,var(--accent) 30%,#fff);color:var(--accent);filter:none}
+
+/* 단지 현황의 작은 지도 */
+.minimap{display:grid;gap:10px}
+.minimap h3{margin:0}
+.mm-search{position:relative}
+.mm-search input{width:100%;padding:9px 12px;border-radius:10px}
+.mm-list{position:absolute;z-index:1200;left:0;right:0;top:calc(100% + 4px);max-height:260px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:4px}
+.mm-list button{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;border:0;background:none;padding:7px 9px;border-radius:6px}
+.mm-list button:hover{background:var(--line2)}
+.mm-list small{color:var(--ink3)}
+.mm-map{position:relative}
+#mmMap{height:250px;border-radius:12px;border:1px solid var(--line);overflow:hidden}
+.mm-map .btn{position:absolute;z-index:500;right:10px;bottom:10px;background:rgba(255,255,255,.9)}
+.minimap .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 3px 0 6px;vertical-align:baseline}

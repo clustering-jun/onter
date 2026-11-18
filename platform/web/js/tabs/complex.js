@@ -1,5 +1,6 @@
 // 단지 현황: 단지 카드 + 통합 자료 전부(기본 정보, 연령, 필요 지표 원값, 운영 이력, 최근 기록, 상태표, 비슷한 단지, 접근성, 홈닥터, 해피콜, 그 밖의 기록)
 import { panel as welfarePanel } from './welfare.js';
+import * as minimap from './minimap.js';
 import { STATIC, buildToc, S, api, post, $, $$, esc, f, needPick, complexCard, needChart, hbars, stChip, domChip, setComplex, table, toast, DOM, NA, monthBars, pos, happycallBlock, TYPE_COLOR } from '../core.js';
 
 const ST_ORDER = ['running', 'paused', 'not_run', 'no_record', 'declared', 'snoozed', 'infeasible'];
@@ -32,6 +33,7 @@ export async function render(view, arg, alive) {
       <div class="panel" data-toc="기본 현황">${complexCard(d, { actions: false })}
         <div class="sec row"><a class="btn pri" href="#/recommend">추천 프로그램 보기</a><a class="btn" href="#/plan">실행 계획</a><a class="btn" href="#/kg">Knowledge Graph</a></div></div>
       <div class="grid" style="align-content:start">
+        ${minimap.html(cid)}
         <figure class="panel photo ${S.meta.photos.includes(cid) ? '' : 'sample'}"><img src="img/complex/${S.meta.photos.includes(cid) ? cid : 'default'}.jpg" alt="${esc(d.name)} 전경">
           <figcaption><span class="real">${esc(d.name)} 단지 사진</span><span class="smp">예시 사진입니다. 이 단지의 사진이 아닙니다.</span></figcaption></figure>
         <div class="panel"><h3>분야별 필요와 공급 <small class="muted">전체 단지 가운데 위치</small></h3>
@@ -149,6 +151,7 @@ export async function render(view, arg, alive) {
 
   buildToc(view);
   welfarePanel($('#wfBox'), cid);
+  minimap.mount(cid);
   $('#needBox').addEventListener('click', async e => {
     const btn = e.target.closest('.seg button'); if (!btn) return;
     const domain = btn.parentElement.dataset.domain, level = btn.dataset.level || null;
@@ -166,3 +169,5 @@ export async function render(view, arg, alive) {
   $('#memoSave').addEventListener('click', async () => { await post('state/memo', { id: cid, memo: $('#memo').value }); $('#memoMsg').textContent = '저장했습니다'; });
   $('#exList').addEventListener('click', async e => { const btn = e.target.closest('[data-restore]'); if (!btn) return; await post('state/restore', { id: cid, sid: btn.dataset.restore }); toast('되돌렸습니다'); render(view, undefined, alive); });
 }
+
+export const leave = minimap.leave;

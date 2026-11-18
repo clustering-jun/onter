@@ -77,7 +77,7 @@ async function llmDot() {
   if (!S.meta.kg && $('#tabs a[data-tab=kg]')) $('#tabs a[data-tab=kg]').dataset.tip = 'Knowledge Graph 자료가 없습니다';
   on('complex', cid => {
     $('#pickerName').textContent = S.byId[cid].name; $('#pickerBtn').classList.add('has');
-    if (NEEDS_COMPLEX.has(current)) route(); else if (current === 'map') map.select(cid);
+    if (NEEDS_COMPLEX.has(current)) { if (current === 'complex' && location.hash !== '#/complex') history.replaceState(null, '', '#/complex'); route(); } else if (current === 'map') map.select(cid);
   });
   let saved = null; try { saved = localStorage.getItem('onter.cid'); } catch { }
   if (saved && S.byId[saved]) { S.cid = saved; $('#pickerName').textContent = S.byId[saved].name; $('#pickerBtn').classList.add('has'); }
