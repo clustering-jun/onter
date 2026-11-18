@@ -524,10 +524,6 @@ html{font-size:calc(clamp(13.5px,.42vw + 9px,17.5px)*.9)}
 @keyframes pulse{0%{transform:scale(1);opacity:.65}80%{opacity:0}100%{transform:scale(2.4);opacity:0}}
 @keyframes pulse-sel{0%{transform:scale(1);opacity:.85}100%{transform:scale(3.4);opacity:0}}
 @media (prefers-reduced-motion:reduce){.pulse i{animation:none}}
-.leaflet-tooltip.mtip.msel{background:#111;color:#fff;border-color:#111;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:900}
-.mtip.msel .t{color:#fff}
-.mtip.msel .k{color:#d5dae2;display:block;width:max-content;max-width:24rem;white-space:normal}
-.leaflet-tooltip-top.msel::before{border-top-color:#111}
 .wfcard{cursor:default}
 .wfcard p{margin:8px 0 10px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .wfcard .pgmeta{flex-wrap:wrap;gap:4px 14px}
