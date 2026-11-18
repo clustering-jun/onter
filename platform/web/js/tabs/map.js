@@ -85,6 +85,7 @@ function draw(fit) {
     const mk = L.circleMarker([c.lat, c.lon], { radius: r, color: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d', weight: col ? 1.2 : 1.4, dashArray: col ? null : '3 2', fillColor: col || '#fff', fillOpacity: col ? 0.95 : 0.65, plain: !col || !!z, base: col ? (z ? '#5d6673' : '#2f3742') : '#626d7d' });
     mk.bindTooltip(tipHtml(c, sc), { direction: 'top', offset: [0, -r], className: 'mtip', opacity: 1 });
     mk.on('click', () => setComplex(c.id));
+    mk.on('tooltipopen', () => { if (c.id === S.cid) mk.closeTooltip(); });   // 고른 단지는 이름·주소 표지가 이미 떠 있으므로 겹쳐 띄우지 않는다
     mk.addTo(layer); markers[c.id] = mk;
     if (col && !z) {                                           // 반짝임: 원 뒤에서 같은 색 고리가 퍼졌다 사라진다. 단지마다 박자를 달리한다
       const dur = 2.4 + Math.random() * 1.6;
@@ -107,7 +108,7 @@ function highlight() {
   if (selected && markers[selected]) markers[selected].setStyle({ color: markers[selected].options.base, weight: 1.1 });
   Object.entries(pulses).forEach(([id, p]) => p.getElement() && p.getElement().classList.toggle('sel', id === S.cid));
   selected = S.cid;
-  if (selected && markers[selected]) { markers[selected].setStyle({ color: '#111', weight: 3.5 }); markers[selected].bringToFront(); }
+  if (selected && markers[selected]) { markers[selected].setStyle({ color: '#111', weight: 3.5 }); markers[selected].bringToFront(); markers[selected].closeTooltip(); }
   if (selTip) { selTip.remove(); selTip = null; }
   const sc = selected && S.byId[selected];                      // 고른 단지에는 이름과 주소를 계속 띄워 둔다
   if (sc && map && markers[selected]) selTip = L.tooltip({ permanent: true, direction: 'top', offset: [0, -markers[selected].options.radius - 6], className: 'mtip msel', opacity: 1 })
