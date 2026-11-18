@@ -5,8 +5,8 @@ from collections import Counter
 import pdfplumber
 from pypdf import PdfReader
 
-ROOT = Path(__file__).resolve().parents[1]
-SOURCE = Path(r'C:\Users\user\Desktop\2026 DRIVE\전문가 자료\주요사업 결과보고서.pdf')
+ROOT = Path(__file__).resolve().parents[2]
+SOURCE = ROOT.parent / '전문가 자료' / '주요사업 결과보고서.pdf'     # project 밖에 둔 원문. 없으면 아래에서 찾는다
 if not SOURCE.exists():
     found=list(ROOT.parent.rglob(SOURCE.name))
     if len(found)!=1:raise RuntimeError('Cannot uniquely locate source PDF')

@@ -27,7 +27,7 @@ import web_extra as WX
 from community_nlp import taxonomy as TX
 
 OUT = sys.argv[1]
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")).replace("\\", "/") + "/"
 NLP_AN = ROOT + "archive/processed_support_20261117_v1/community_nlp_2026_v1/analysis/"
 TAB = os.path.join(OUT, "tables")
 PTAB = os.path.join(OUT, "problem_definition", "tables")

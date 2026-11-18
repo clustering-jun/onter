@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 from shapely.geometry import Polygon, mapping
 from shapely.ops import unary_union
 
-SHP = r"C:/Users/user/Desktop/2026 DRIVE/project/data/raw/(B100)국토통계_국토정책지표-경로당 접근성-250M_2024/41.1 경로당(읍면동격자) 접근성"
+SHP = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "raw", "(B100)국토통계_국토정책지표-경로당 접근성-250M_2024", "41.1 경로당(읍면동격자) 접근성")).replace("\\", "/")
 
 
 def tm_inverse(x, y, lat0=38.0, lon0=127.5, k0=0.9996, fe=1_000_000.0, fn=2_000_000.0, a=6378137.0, f=1 / 298.257222101):

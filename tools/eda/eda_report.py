@@ -9,13 +9,13 @@ import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, r"C:/Users/user/Desktop/2026 DRIVE/project/tools")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
 from community_nlp import josa as J
 from community_nlp.report import md_table
 
 OUT = sys.argv[1]
 S = pickle.load(open(os.path.join(OUT, "tables", "summary_values.pkl"), "rb"))
-KEYS = r"C:/Users/user/Desktop/2026 DRIVE/project/data/processed/complex_keys_20261117_v1/"
+KEYS = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "processed", "complex_keys_20261117_v1")).replace("\\", "/") + "/"
 chk = pd.read_csv(KEYS + "key_integrity_checks.csv", encoding="utf-8-sig")
 cx = pd.read_csv(KEYS + "complex_key_crosswalk.csv", encoding="utf-8-sig")
 bl = pd.read_csv(os.path.join(OUT, "tables", "forecast_baselines.csv"), encoding="utf-8-sig")

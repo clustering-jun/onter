@@ -14,7 +14,7 @@
 | `platform/` | 웹 플랫폼. 파이썬 서버(`server/`), 화면(`web/`), LLM 미리 만들기와 정적 판 빌드(`tools/`), 만들어 둔 LLM 결과(`data/`) |
 | `model/` | 추천 알고리즘 네 모듈(`onter/`), 실험(`experiments/`), 결과(`results/`), 설계 문서(`docs/`) |
 | `knowledge_graph/` | 단지·프로그램·기록·사례의 연결을 탐색하는 시제품(로컬 서버 필요) |
-| `tools/` | 자료 가공 스크립트(해피콜, 커뮤니티 기록, 사례집, 뉴스) |
+| `tools/` | 자료 가공 스크립트(주소·좌표, 해피콜, 커뮤니티 기록, 사례집, 뉴스, 복지서비스, 탐색 분석). 순서와 입출력은 [tools/README.md](tools/README.md) |
 
 문서: [시스템 구조](model/docs/00_system_architecture.md) · [플랫폼 설계](platform/docs/01_설계.md) · [플랫폼 README](platform/README.md)
 

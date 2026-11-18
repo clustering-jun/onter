@@ -30,7 +30,8 @@ platform/
 │  ├─ css/kg_embed.css Knowledge Graph 화면을 플랫폼 디자인에 맞추는 덮어쓰기
 │  ├─ js/core.js       공통(API, 상태, 표시 도우미, 차트, 단지 카드, 목차)
 │  ├─ js/main.js       시작, 탭 전환, 단지 선택
-│  ├─ js/tabs/*.js     탭 10개(map, complex, recommend, plan, programs, cases, happycall, analysis, kg, about)
+│  ├─ js/static.js     공개 시연판용: 서버 대신 api/*.json을 읽고 조절값을 미리 계산한 격자에 맞춘다(core.js의 STATIC일 때만)
+│  ├─ js/tabs/*.js     탭 10개(map, complex, recommend, plan, programs, cases, happycall, analysis, kg, about) + welfare.js(복지 프로그램 사전 안의 정부·지자체 복지서비스, 단지 현황의 지역 요약)
 │  └─ img/complex/     단지 사진(단지ID.jpg). 없으면 default.jpg(예시 사진)
 ├─ data/               llm_cache.json(LLM 결과 캐시), llm_generated/(읽기 좋은 사본), user_state.json(사용자 입력, 저장소에는 없음)
 ├─ tools/
@@ -70,7 +71,7 @@ GET 경로의 JSON 출력, 기본 순위와 오프라인 산출물의 일치(318
 python tools/prefill_llm.py
 ```
 
-서버와 Ollama가 떠 있어야 한다. 묶음 설명(단지 × 조건 12가지), 분야별 보기의 근거 문장, 실행 점검표를 순위가 높은 것부터 만들어 `data/llm_cache.json`에 쌓고, 읽기 좋은 사본을 `data/llm_generated/*.jsonl`에 남긴다. 끊겨도 다시 실행하면 남은 것만 한다. 점검표 전체는 몇 시간 걸린다(`--top 3 --no-extra`로 줄일 수 있다).
+서버와 Ollama가 떠 있어야 한다. 묶음 설명(단지 × 조건 12가지. 시연판의 실행 계획 격자 108가지 전체는 아니다. 채우려면 이 파일의 조건 목록을 `build_static.py`의 격자에 맞춘다), 분야별 보기의 근거 문장, 실행 점검표를 순위가 높은 것부터 만들어 `data/llm_cache.json`에 쌓고, 읽기 좋은 사본을 `data/llm_generated/*.jsonl`에 남긴다. 끊겨도 다시 실행하면 남은 것만 한다. 점검표 전체는 몇 시간 걸린다(`--top 3 --no-extra`로 줄일 수 있다).
 
 ```bash
 python tools/build_static.py
@@ -91,6 +92,7 @@ python tools/build_static.py
 ## 주의
 
 - 로컬 도구다. 인증이 없고 `127.0.0.1`과 `::1`에만 붙는다. 그대로 공개 서버에 올리지 않는다.
-- 단지별 수치를 밖에 공개할 범위는 아직 정하지 않았다.
+- 공개 시연판(GitHub Pages)에는 단지별 고독사 건수와 해피콜 주민 의견을 포함해 전부 싣기로 했다(2026-11-18 결정). 주민 식별 정보와 뉴스 본문은 싣지 않는다.
+- 서버는 Content-Type이 `application/json`인 POST만 받는다. 다른 사이트가 양식 전송으로 메모·제외를 바꾸지 못하게 하기 위해서다.
 - 뉴스는 제목과 링크만 보여 준다. 본문과 주민 식별 정보는 싣지 않는다.
 - 고독사 기록은 참고로만 보여 주고 추천 계산과 필요 지수에 넣지 않는다.

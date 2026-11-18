@@ -23,7 +23,7 @@ from community_nlp.text_utils import compact                        # noqa: E402
 from news_nlp import programs as PG, index as IX, signals as SG     # noqa: E402
 from casebook_nlp import segment as SEG, intro as INTRO, docs as DOCS   # noqa: E402
 
-DATA = r"C:/Users/user/Desktop/2026 DRIVE/project/data/"
+DATA = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")).replace("\\", "/") + "/"
 COMM = DATA + "processed/community_nlp_2026_v1/"
 MASTER = DATA + "processed/complex_integrated_20261117_v1/data/complex_master.csv"
 VERSION = "casebook_programs_v1"

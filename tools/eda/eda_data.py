@@ -5,7 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/processed/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "processed")).replace("\\", "/") + "/"
 IG = ROOT + "complex_integrated_20261117_v1/data/"
 KEYS = ROOT + "complex_keys_20261117_v1/"
 COMMUNITY = os.environ.get("EDA_COMMUNITY") or (ROOT + "community_nlp_2026_v1/")

@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,re,csv,sqlite3,hashlib
 from collections import Counter
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[2]
 B=ROOT/'data/processed/happycall_2025_v1'
 def read(n):return [json.loads(l) for l in (B/(n+'.jsonl')).read_text(encoding='utf-8').splitlines()]
 def compact(s):return ''.join((s or '').split())

@@ -30,7 +30,7 @@ from pathlib import Path
 
 import requests
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "raw" / "주택관리공단(주)_임대단지 관리현황_20260901.csv"
 INTEG = ROOT / "data" / "processed" / "complex_integrated_20261117_v1"
 OUT = ROOT / "data" / "processed" / "complex_geocode_20261117_v1"

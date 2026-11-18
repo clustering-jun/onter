@@ -13,7 +13,7 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import adjusted_rand_score, silhouette_score
 from sklearn.preprocessing import StandardScaler
 
-sys.path.insert(0, r"C:/Users/user/Desktop/2026 DRIVE/project/tools")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
 from community_nlp.figures import SURFACE, INK1, INK2, INK3, GRID, AXIS, CAT, SEQ, GRAY_N, _base, _title, _save
 from community_nlp.figures_extra import DIV, _short
 from community_nlp.analysis_extra import spearman_boot, holm, gini

@@ -249,6 +249,8 @@ class Handler(BaseHTTPRequestHandler):
         route = urllib.parse.unquote(urllib.parse.urlsplit(self.path).path)
         if not route.startswith("/api/"):
             return self.send_error(404)
+        if "application/json" not in (self.headers.get("Content-Type") or ""):     # 다른 사이트의 양식 전송(text/plain)으로 메모·제외를 바꾸지 못하게 한다. fetch의 JSON 요청은 사전 확인을 거친다
+            return self.send_json(dict(error="Content-Type은 application/json이어야 합니다"), 415)
         try:
             n = int(self.headers.get("Content-Length") or 0)
             body = json.loads(self.rfile.read(n).decode("utf-8") or "{}") if n else {}

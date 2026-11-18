@@ -23,7 +23,7 @@ from community_nlp import taxonomy as TX                       # noqa: E402
 from community_nlp.package import write_checksums, write_manifest   # noqa: E402
 from news_nlp import clean as C, link as LK, programs as PG, signals as SG, index as IX, docs as DC   # noqa: E402
 
-DATA = r"C:/Users/user/Desktop/2026 DRIVE/project/data/"
+DATA = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")).replace("\\", "/") + "/"
 COMM = DATA + "processed/community_nlp_2026_v1/"
 MASTER = DATA + "processed/complex_integrated_20261117_v1/data/complex_master.csv"
 VERSION = "housing_welfare_news_v1"

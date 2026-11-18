@@ -10,7 +10,7 @@ import pandas as pd
 sys.stdout.reconfigure(encoding="utf-8")
 OUT = os.path.join(sys.argv[1], "problem_definition")
 S = pickle.load(open(os.path.join(OUT, "tables", "problem_summary.pkl"), "rb"))
-NLP_AN = r"C:/Users/user/Desktop/2026 DRIVE/project/data/archive/processed_support_20261117_v1/community_nlp_2026_v1/analysis/"
+NLP_AN = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "archive", "processed_support_20261117_v1", "community_nlp_2026_v1", "analysis")).replace("\\", "/") + "/"
 dg = pd.read_csv(NLP_AN + "disp_group_summary.csv", encoding="utf-8-sig")
 dgb = dg[dg["factor"] == "지사"].sort_values("median")
 mis = pd.read_csv(os.path.join(OUT, "tables", "high_need_low_supply_complexes.csv"), encoding="utf-8-sig")

@@ -1,4 +1,4 @@
-const {chromium}=require(process.env.PLAYWRIGHT_PATH||'C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 const fs=require('fs'),path=require('path');
 const out=path.join(__dirname,'docs','screenshots');fs.mkdirSync(out,{recursive:true});
 async function main(){

@@ -3,7 +3,7 @@ from pathlib import Path
 import json,csv,re,hashlib,shutil,sqlite3,sys
 from collections import Counter
 import pdfplumber
-ROOT=Path(r'C:\Users\user\Desktop\2026 DRIVE\project')
+ROOT=Path(__file__).resolve().parents[2]
 OLD=ROOT/'data/processed/happycall_2025_v1'
 OUT=ROOT.parent/'전문가 지식자료/주요사업_결과보고서_정제'
 OUT.mkdir(parents=True,exist_ok=True)

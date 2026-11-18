@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/processed/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "processed")).replace("\\", "/") + "/"
 COMM = os.environ.get("EDA_COMMUNITY") or (ROOT + "community_nlp_2026_v1/")
 OUT = os.environ.get("PANEL_OUT") or (ROOT + "complex_month_panel_20261117_v1/")
 rd = lambda p, **k: pd.read_csv(p, encoding="utf-8-sig", **k)

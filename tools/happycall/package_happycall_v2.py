@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,csv,sqlite3,hashlib,re,shutil
 from collections import Counter
-ROOT=Path(r'C:\Users\user\Desktop\2026 DRIVE\project');B=ROOT.parent/'전문가 지식자료/주요사업_결과보고서_정제';OLD=ROOT/'data/processed/happycall_2025_v1'
+ROOT=Path(__file__).resolve().parents[2];B=ROOT.parent/'전문가 지식자료/주요사업_결과보고서_정제';OLD=ROOT/'data/processed/happycall_2025_v1'
 if (B/'source_archive/manifest.json').exists():OLD=B/'source_archive'
 def read(n,base=B):return [json.loads(l) for l in (base/(n+'.jsonl')).read_text(encoding='utf-8').splitlines()]
 def save(n,rs):
@@ -118,6 +118,6 @@ original_manifest['source_master_path']=str(archive/'master_complex_input.csv')
 original_manifest['source_path']=str(B/'원문_주요사업 결과보고서.pdf')
 (archive/'manifest.json').write_text(json.dumps(original_manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 code=B/'재실행도구';code.mkdir(exist_ok=True)
-for name in ['refine_happycall.py','audit_happycall_v2.py','package_happycall_v2.py']:shutil.copy2(ROOT/'tools'/name,code/name)
+for name in ['refine_happycall.py','audit_happycall_v2.py','package_happycall_v2.py']:shutil.copy2(Path(__file__).parent/name,code/name)
 (B/'file_checksums.json').write_text(json.dumps({str(f.relative_to(B)):hashlib.sha256(f.read_bytes()).hexdigest() for f in B.rglob('*') if f.is_file() and f.name!='file_checksums.json'},ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps(report,ensure_ascii=False,indent=2))

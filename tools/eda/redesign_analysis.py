@@ -33,7 +33,7 @@ from community_nlp.figures import SURFACE, INK1, INK2, INK3, GRID, AXIS, CAT, GR
 OUT = os.path.join(sys.argv[1], "redesign")
 FIG, TAB = os.path.join(OUT, "figures"), os.path.join(OUT, "tables")
 os.makedirs(FIG, exist_ok=True); os.makedirs(TAB, exist_ok=True)
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")).replace("\\", "/") + "/"
 rd = lambda p, **k: pd.read_csv(p, encoding="utf-8-sig", low_memory=False, **k)
 f = lambda n: os.path.join(FIG, n)
 HI = P.HI

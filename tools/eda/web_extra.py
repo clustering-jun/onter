@@ -8,7 +8,7 @@ import re
 import numpy as np
 import pandas as pd
 
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")).replace("\\", "/") + "/"
 COMM = ROOT + "processed/community_nlp_2026_v1/"
 HAPPY = ROOT + "processed/happycall_2025_v1/"
 rd = lambda p, **k: pd.read_csv(p, encoding="utf-8-sig", low_memory=False, **k)

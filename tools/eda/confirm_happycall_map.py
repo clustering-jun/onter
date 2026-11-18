@@ -17,7 +17,7 @@ import sys
 import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/processed/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "processed")).replace("\\", "/") + "/"
 K = ROOT + "complex_keys_20261117_v1/"
 rd = lambda p, **kw: pd.read_csv(p, encoding="utf-8-sig", **kw)
 DATE = "2026-11-17"

@@ -15,7 +15,7 @@ import sys
 import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/processed/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "processed")).replace("\\", "/") + "/"
 OUT = ROOT + "complex_keys_20261117_v1/"
 IG = ROOT + "complex_integrated_20261117_v1/data/"
 COMM = os.environ.get("EDA_COMMUNITY") or (ROOT + "community_nlp_2026_v1/")

@@ -16,13 +16,13 @@ from scipy.spatial.distance import pdist, squareform, cdist
 from sklearn.linear_model import RidgeCV
 from sklearn.model_selection import KFold, cross_val_score
 
-sys.path.insert(0, r"C:/Users/user/Desktop/2026 DRIVE/project/tools")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
 from community_nlp.figures import SURFACE, INK1, INK2, INK3, GRID, AXIS, CAT, GRAY_N, GRAY_U
 from community_nlp.analysis_extra import spearman_boot
 from community_nlp import taxonomy as TX
 import eda_data as ED
 
-ROOT = r"C:/Users/user/Desktop/2026 DRIVE/project/data/"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")).replace("\\", "/") + "/"
 COMM = ROOT + "processed/community_nlp_2026_v1/"
 HI = "#e34948"          # 강조(문제 지점) — 범주 팔레트 8번
 SUPPLY_COLOR = dict(zip(ED.SUPPLY_ORDER, CAT[:5]))

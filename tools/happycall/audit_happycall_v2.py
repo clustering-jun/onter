@@ -1,13 +1,13 @@
 from pathlib import Path
-import json,sys,subprocess,tempfile,shutil
-ROOT=Path(r'C:\Users\user\Desktop\2026 DRIVE\project');B=ROOT.parent/'전문가 지식자료/주요사업_결과보고서_정제'
+import json,sys,subprocess,tempfile,shutil,os
+ROOT=Path(__file__).resolve().parents[2];B=ROOT.parent/'전문가 지식자료/주요사업_결과보고서_정제'
 def read(n):return [json.loads(l) for l in (B/(n+'.jsonl')).read_text(encoding='utf-8').splitlines()]
 if '--render' in sys.argv:
  out=B/'원문대조';out.mkdir(exist_ok=True)
  with tempfile.TemporaryDirectory() as td:
   src=Path(td)/'report.pdf';shutil.copy2(B/'원문_주요사업 결과보고서.pdf',src)
   for p in [18,22,30,33,37,39,40,53,60,63,76,84]:
-   subprocess.run([r'C:\Users\user\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\poppler\Library\bin\pdftoppm.exe','-f',str(p),'-l',str(p),'-singlefile','-scale-to','1800','-png',str(src),str(out/f'page_{p}')],check=True,capture_output=True)
+   subprocess.run([os.environ.get('PDFTOPPM') or shutil.which('pdftoppm') or 'pdftoppm','-f',str(p),'-l',str(p),'-singlefile','-scale-to','1800','-png',str(src),str(out/f'page_{p}')],check=True,capture_output=True)
 stats=read('statistics_clean');rows={}
 for s in stats:rows.setdefault((s['table_id'],tuple(s['source_anchor_bbox'])),[]).append(s)
 anomalies=[]
