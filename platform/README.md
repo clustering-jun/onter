@@ -80,7 +80,7 @@ python tools/build_static.py
 
 ## 단지 사진 넣기
 
-`web/img/complex/`에 `단지ID.jpg`로 넣는다(예: `KOH_1.jpg`). 단지 ID는 단지 현황을 열었을 때 주소창의 `#/complex/` 뒤에 붙는 값이다. 가운데 기준 정사각형으로 잘라 보여 준다. 넣은 뒤에는 브라우저를 새로고침하면 된다.
+318곳 모두 들어 있다(원본은 `project/data/raw/complex_photos_20261118/`, 여기에는 긴 변 1200px로 줄인 사본). 바꾸려면 `web/img/complex/`에 `단지ID.jpg`로 넣는다(예: `KOH_1.jpg`). 단지 ID는 단지 현황을 열었을 때 주소창의 `#/complex/` 뒤에 붙는 값이다. 가운데 기준 정사각형으로 잘라 보여 준다. 넣은 뒤에는 브라우저를 새로고침하면 된다.
 
 ## 자료를 바꿨을 때
 
