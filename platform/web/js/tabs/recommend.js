@@ -82,7 +82,7 @@ async function drawDetail(cid, reload) {
               <button data-ex="not_now">지금은 아님<small class="muted">후보가 모자랄 때 ${S.meta.max_resurface}번까지 다시 나올 수 있음</small></button>
               <button data-ex="infeasible">운영 불가능<small class="muted">다시 추천하지 않음</small></button>
               <button data-ex="already">이미 운영 중<small class="muted">기록이 없는 것으로 표시</small></button></div></span>` : ''}
-            <a class="btn sm" href="#/programs/${sid}">프로그램 사전</a><a class="btn sm" href="#/kg/program:${sid}">Knowledge Graph</a></div></div>
+            <a class="btn sm" href="#/programs/${sid}">복지 프로그램 사전</a><a class="btn sm" href="#/kg/program:${sid}">Knowledge Graph</a></div></div>
         <h2>${esc(d.name)}</h2>
         <div class="dfacts"><span>공단 쪽 연간 비용 <b>${f.man(c.cost_year_est)}</b></span><span>난이도 <b>${c.staff_tier}/5</b></span><span>많이 여는 달 <b>${c.peak_months.replaceAll('|', '·')}월</b></span></div>
         ${c.welfare_gap ? '<div class="note warn" style="margin-top:10px">주거복지사가 있어야 하는 프로그램인데 이 단지는 미배치입니다.</div>' : ''}

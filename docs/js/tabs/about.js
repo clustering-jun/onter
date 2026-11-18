@@ -11,7 +11,7 @@ export async function render(view) {
         <tr><td><b><a href="#/complex">단지 현황</a></b></td><td>단지 카드, 분야별 필요와 공급, 확인된 필요 입력, 운영 이력, 프로그램 상태표, 비슷한 단지.</td></tr>
         <tr><td><b><a href="#/recommend">프로그램 추천</a></b></td><td>검토 후보와 추천 근거, 비슷한 단지 운영 사례, 사례집의 걸림돌·해결, 실행 점검표. 조절 손잡이로 다시 계산합니다.</td></tr>
         <tr><td><b><a href="#/plan">실행 계획</a></b></td><td>예산·인력 한도 안에서 한 해 묶음을 정수계획으로 고릅니다.</td></tr>
-        <tr><td><b><a href="#/programs">프로그램 사전</a></b></td><td>표준 프로그램 ${m.counts.programs}종의 정의, 요건, 운영 현황, 사례. 자유 검색.</td></tr>
+        <tr><td><b><a href="#/programs">복지 프로그램 사전</a></b></td><td>표준 프로그램 ${m.counts.programs}종의 정의, 요건, 운영 현황, 사례. 자유 검색.</td></tr>
         <tr><td><b><a href="#/cases">사례·소식</a></b></td><td>사례집 카드, 걸림돌·해결 정리, 뉴스 제목과 링크.</td></tr>
         <tr><td><b><a href="#/happycall">해피콜</a></b></td><td>관리소별 만족도, 주민이 말한 수요, 수요·공급·추천 분포, 주민 의견.</td></tr>
         <tr><td><b><a href="#/analysis">분석</a></b></td><td>변수 탐색기, 전국 수요와 공급, 실험 결과 표.</td></tr>
